@@ -89,14 +89,14 @@ export function QuickStart() {
           <div className="relative group order-1 lg:order-2">
             <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[2rem] blur-2xl opacity-50 group-hover:opacity-75 transition duration-1000"></div>
             
-            <div className="code-panel relative rounded-2xl shadow-2xl overflow-hidden border border-border/50 bg-[#1e1e1e]">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#252526]">
+            <div className="code-panel relative rounded-2xl shadow-2xl overflow-hidden">
+              <div className="code-panel__header flex items-center justify-between px-6 py-4">
                 <div className="flex space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                  <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                  <div className="code-panel__dot code-panel__dot--1" />
+                  <div className="code-panel__dot code-panel__dot--2" />
+                  <div className="code-panel__dot code-panel__dot--3" />
                 </div>
-                <div className="flex items-center text-xs font-mono text-zinc-400 gap-2">
+                <div className="code-panel__filename flex items-center text-xs font-mono gap-2">
                    <span className="opacity-50">/</span>
                    <span>example.py</span>
                 </div>
@@ -104,7 +104,7 @@ export function QuickStart() {
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-zinc-400 hover:text-white hover:bg-white/10"
+                        className="h-8 w-8 hover:bg-accent"
                         onClick={copyToClipboard}
                     >
                         {copied ? (
@@ -116,7 +116,7 @@ export function QuickStart() {
                 </div>
               </div>
               
-              <div className="p-6 overflow-x-auto bg-[#1e1e1e]">
+              <div className="code-panel__content p-6 overflow-x-auto">
                 <pre className="text-sm font-mono leading-relaxed">
                   <code dangerouslySetInnerHTML={{ __html: highlighted }} />
                 </pre>
@@ -138,16 +138,12 @@ export function QuickStart() {
         .line-number { 
             display: inline-block; 
             width: 2rem; 
-            color: #6e7681; 
+            color: var(--code-line-number); 
             text-align: right; 
             margin-right: 1.5rem; 
             user-select: none;
             opacity: 0.5;
         }
-        .tk-keyword { color: #ff7b72; font-style: italic; }
-        .tk-string { color: #a5d6ff; }
-        .tk-number { color: #79c0ff; }
-        .tk-comment { color: #8b949e; font-style: italic; }
       `}</style>
     </section>
   );

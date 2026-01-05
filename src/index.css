@@ -103,6 +103,11 @@
   --code-dot-1: #0f0f0f;
   --code-dot-2: #0f0f0f;
   --code-dot-3: #0f0f0f;
+  --code-keyword: #a626a4;
+  --code-string: #50a14f;
+  --code-number: #986801;
+  --code-comment: #a0a1a7;
+  --code-line-number: #9e9e9e;
 }
 
 .dark {
@@ -160,6 +165,11 @@
   --code-dot-1: #52525b;
   --code-dot-2: #52525b;
   --code-dot-3: #52525b;
+  --code-keyword: #c586c0;
+  --code-string: #ce9178;
+  --code-number: #b5cea8;
+  --code-comment: #6a9955;
+  --code-line-number: #6e7681;
 }
 
 /* Utilities */
@@ -348,10 +358,10 @@
   color: var(--code-text);
 }
 
-.tk-keyword { color: #c586c0; }
-.tk-string { color: #ce9178; }
-.tk-number { color: #b5cea8; }
-.tk-comment { color: #6a9955; }
+.tk-keyword { color: var(--code-keyword); font-style: italic; }
+.tk-string { color: var(--code-string); }
+.tk-number { color: var(--code-number); }
+.tk-comment { color: var(--code-comment); font-style: italic; }
 
 .code-panel__dot {
   width: 0.75rem;
