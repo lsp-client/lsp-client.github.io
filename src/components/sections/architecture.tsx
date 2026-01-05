@@ -72,7 +72,7 @@ export function Architecture() {
               rel="noopener noreferrer"
               className="group block relative"
             >
-              <Card className="h-full relative overflow-hidden rounded-2xl border border-border glass-light transition-all duration-300 hover:shadow-lg hover:border-primary/20 hover:bg-[rgba(255,255,255,0.7)] dark:hover:bg-[rgba(24,24,27,0.7)]">
+              <Card className="h-full relative overflow-hidden rounded-2xl border border-border glass transition-all duration-300 hover:shadow-lg hover:border-primary/20 hover:scale-[1.01]">
                 <CardHeader className="relative">
                   <div className="flex items-center justify-between mb-4">
                     <div className="p-3 rounded-xl bg-muted text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">

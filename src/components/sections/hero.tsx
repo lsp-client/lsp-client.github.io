@@ -14,9 +14,9 @@ export function Hero() {
 
   return (
     <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-24 pb-12">
-      
+
       <div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
-        
+
         {/* Badge - Simple version number */}
         <div className="inline-flex items-center gap-2 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
            <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1.5 rounded-full font-mono">v0.1.0</span>
@@ -25,8 +25,7 @@ export function Hero() {
 
         {/* Main Heading */}
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tighter text-foreground mb-6 max-w-6xl mx-auto leading-[0.95] animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100 selection:bg-primary selection:text-primary-foreground">
-          AI-Native Code <br/>
-          IntelliSense
+          IntelliSense <br/> for Agentic Coding
         </h1>
 
         {/* Description - From README */}
@@ -43,15 +42,15 @@ export function Hero() {
                  <div className="px-6 py-3 text-sm font-medium text-muted-foreground hover:text-foreground cursor-not-allowed transition-colors">pip</div>
                  <div className="px-6 py-3 text-sm font-medium text-muted-foreground hover:text-foreground cursor-not-allowed transition-colors">brew</div>
               </div>
-              
+
               {/* Command Area */}
               <div className="p-6 md:p-8 flex items-center justify-between group bg-background">
                  <code className="font-mono text-sm md:text-lg text-foreground break-all tracking-tight">
                     {installCmd}
                  </code>
-                 <Button 
-                    variant="ghost" 
-                    size="icon" 
+                 <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={copyCommand}
                     className="ml-4 text-muted-foreground hover:text-foreground shrink-0 hover:bg-muted/50 rounded-lg h-10 w-10"
                  >

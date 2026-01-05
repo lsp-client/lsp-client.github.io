@@ -6,7 +6,7 @@ export function Footer() {
       <div className="container px-4 md:px-6 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-display font-bold mb-6">LSP Client Ecosystem</h3>
+            <h3 className="text-2xl font-display font-bold mb-6">IntelliSense for Agentic Coding</h3>
             <p className="text-muted-foreground text-lg max-w-sm leading-relaxed">
               Building the future of AI-native software engineering.
               Transforming the Language Server Protocol into actionable

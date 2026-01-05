@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Github } from "lucide-react";
 import { useEffect, useState } from "react";
-import logo from "./assets/lsp-logo.svg";
 
 export function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,8 +37,7 @@ export function App() {
         >
           <div className="container mx-auto px-4 h-16 flex items-center justify-between">
             {/* Logo - Opencode style: Pixel/Block font or Bold Sans */}
-            <div className="flex items-center gap-3">
-              <img src={logo} alt="LSP Client Logo" className="h-6 w-6" />
+            <div className="flex items-center">
               <span className="font-display font-bold text-xl tracking-tighter">
                 lsp-client
               </span>
