@@ -40,7 +40,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   
-  --font-sans: "Roboto Flex", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Google Sans Flex", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Google Sans Code", ui-monospace, monospace;
   --font-mono: "Google Sans Code", ui-monospace, monospace;
 }
