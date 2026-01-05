@@ -16,7 +16,7 @@ export function App() {
       <div className="min-h-screen relative overflow-x-hidden font-sans bg-background text-foreground selection:bg-primary/20">
         <Background />
 
-        <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+        <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 glass-strong">
           <div className="container mx-auto px-4 h-16 flex items-center justify-between">
             {/* Logo - Opencode style: Pixel/Block font or Bold Sans */}
             <div className="flex items-center gap-3">
