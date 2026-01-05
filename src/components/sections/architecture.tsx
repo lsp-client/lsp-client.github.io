@@ -60,7 +60,6 @@ export function Architecture() {
               capabilities into semantic understanding.
             </p>
           </div>
-          <div className="hidden md:block h-px flex-1 bg-border ml-8 mb-4"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
