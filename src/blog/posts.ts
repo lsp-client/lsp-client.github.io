@@ -17,6 +17,24 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "latest-update",
+    title: "Latest Update",
+    description: "Release notes and project updates.",
+    publishedAt: "2026-01-06",
+    tags: ["Updates"],
+    readingMinutes: 2,
+    blocks: [
+      { type: "p", text: "v0.1.0 is live." },
+      {
+        type: "ul",
+        items: [
+          "Initial site + blog",
+          "Hero banner links here for the latest update",
+        ],
+      },
+    ],
+  },
+  {
     slug: "why-lsp-for-agents",
     title: "Why LSP is a Great Substrate for Coding Agents",
     description:
@@ -127,4 +145,3 @@ export function getAllBlogTags() {
   for (const post of BLOG_POSTS) for (const tag of post.tags) tags.add(tag);
   return Array.from(tags).sort((a, b) => a.localeCompare(b));
 }
-

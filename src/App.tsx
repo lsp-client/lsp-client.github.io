@@ -6,8 +6,8 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Architecture } from "@/components/sections/architecture";
 import { Footer } from "@/components/sections/footer";
 import { Hero } from "@/components/sections/hero";
+import { Installation } from "@/components/sections/installation";
 import { Languages } from "@/components/sections/languages";
-import { QuickStart } from "@/components/sections/quick-start";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "@/lib/router";
@@ -76,10 +76,10 @@ export function App() {
                     Architecture
                   </a>
                   <a
-                    href="#quick-start"
+                    href="#installation"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    Quick Start
+                    Installation
                   </a>
                   <a
                     href="#languages"
@@ -152,7 +152,7 @@ export function App() {
             <>
               <Hero />
               <Architecture />
-              <QuickStart />
+              <Installation />
               <Languages />
             </>
           ) : blogSlug ? (

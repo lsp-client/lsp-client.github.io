@@ -1,10 +1,38 @@
+import { AppLink } from "@/components/app-link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Copy } from "lucide-react";
 import { useState } from "react";
 
+type InstallTargetId = "skill" | "cli-tool" | "lsp-sdk";
+
+const INSTALL_TARGETS: Array<{
+  id: InstallTargetId;
+  label: string;
+  command: string;
+}> = [
+  {
+    id: "skill",
+    label: "skill",
+    command: "openskills add lsp-client/lsp-skill",
+  },
+  {
+    id: "cli-tool",
+    label: "cli tool",
+    command: "uv tool install lsp-cli",
+  },
+  {
+    id: "lsp-sdk",
+    label: "LSP SDK",
+    command: "uv add lsp-client",
+  },
+];
+
 export function Hero() {
   const [copied, setCopied] = useState(false);
-  const installCmd = "openskills add lsp-client/lsp-skill";
+  const [installTarget, setInstallTarget] = useState<InstallTargetId>("skill");
+  const installCmd =
+    INSTALL_TARGETS.find((t) => t.id === installTarget)?.command ??
+    INSTALL_TARGETS[0]!.command;
 
   const copyCommand = () => {
     navigator.clipboard.writeText(installCmd);
@@ -16,14 +44,18 @@ export function Hero() {
     <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-24 pb-12">
       <div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
         {/* Badge - Simple version number */}
-        <div className="inline-flex items-center gap-2 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <AppLink
+          href="/blog/latest-update"
+          aria-label="Latest Update"
+          className="inline-flex items-center gap-2 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 hover:opacity-90 transition-opacity"
+        >
           <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1.5 rounded-full font-mono">
             v0.1.0
           </span>
           <span className="text-muted-foreground text-sm font-medium">
             Agent-Native Ecosystem
           </span>
-        </div>
+        </AppLink>
 
         {/* Main Heading */}
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tighter text-foreground mb-6 max-w-6xl mx-auto leading-[0.95] animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100 selection:bg-primary selection:text-primary-foreground">
@@ -39,17 +71,25 @@ export function Hero() {
         {/* Install Block - Opencode Style */}
         <div className="max-w-2xl mx-auto mb-10 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 w-full px-4 md:px-0">
           <div className="rounded-xl border border-border glass overflow-hidden text-left transition-all hover:border-primary/20">
-            {/* Fake Tabs */}
+            {/* Tabs */}
             <div className="flex border-b border-border bg-muted/40">
-              <div className="px-6 py-3 text-sm font-medium border-b-2 border-primary bg-background text-foreground">
-                openskills
-              </div>
-              <div className="px-6 py-3 text-sm font-medium text-muted-foreground hover:text-foreground cursor-not-allowed transition-colors">
-                pip
-              </div>
-              <div className="px-6 py-3 text-sm font-medium text-muted-foreground hover:text-foreground cursor-not-allowed transition-colors">
-                brew
-              </div>
+              {INSTALL_TARGETS.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => {
+                    setInstallTarget(t.id);
+                    setCopied(false);
+                  }}
+                  className={`px-6 py-3 text-sm font-medium transition-colors cursor-pointer ${
+                    t.id === installTarget
+                      ? "border-b-2 border-primary bg-background text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
             </div>
 
             {/* Command Area */}
@@ -76,7 +116,7 @@ export function Hero() {
             className="w-full sm:w-auto font-semibold text-lg px-10 border transition-all hover:-translate-y-0.5"
             asChild
           >
-            <a href="#quick-start">
+            <a href="#installation">
               Get Started <ArrowRight className="ml-2 h-5 w-5" />
             </a>
           </Button>
