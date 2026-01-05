@@ -57,7 +57,7 @@ export function Languages() {
           {languages.map((lang, index) => (
             <div
               key={index}
-              className="group p-6 rounded-2xl border border-border glass-light transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/50 hover:bg-[rgba(255,255,255,0.7)] dark:hover:bg-[rgba(24,24,27,0.7)]"
+              className="group p-6 rounded-2xl border border-border bg-background/50 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:bg-background hover:border-primary/50"
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-display font-bold text-xl">{lang.name}</h3>
