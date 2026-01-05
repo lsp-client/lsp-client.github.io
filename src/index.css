@@ -372,6 +372,7 @@
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   color: var(--code-text);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .code-panel__header {
@@ -391,6 +392,14 @@
 .tk-string { color: var(--code-string); }
 .tk-number { color: var(--code-number); }
 .tk-comment { color: var(--code-comment); font-style: italic; }
+
+.tk-function { color: #d19a66; }
+.tk-class { color: #61afef; }
+.tk-builtin { color: #56b6c2; }
+
+.dark .tk-function { color: #e06c75; }
+.dark .tk-class { color: #61afef; }
+.dark .tk-builtin { color: #56b6c2; }
 
 .code-panel__dot {
   width: 0.75rem;

@@ -7,16 +7,35 @@ import { Languages } from "@/components/sections/languages";
 import { QuickStart } from "@/components/sections/quick-start";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Github } from "lucide-react";
+import { useEffect, useState } from "react";
 import logo from "./assets/lsp-logo.svg";
 
 export function App() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <ThemeProvider defaultTheme="light" storageKey="lsp-client-theme">
       <div className="min-h-screen relative overflow-x-hidden font-sans bg-background text-foreground selection:bg-primary/20">
         <Background />
 
-        <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 glass-strong">
+        <header
+          className={cn(
+            "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+            isScrolled
+              ? "border-b border-border/50 glass-strong py-0"
+              : "bg-transparent border-transparent py-2"
+          )}
+        >
           <div className="container mx-auto px-4 h-16 flex items-center justify-between">
             {/* Logo - Opencode style: Pixel/Block font or Bold Sans */}
             <div className="flex items-center gap-3">

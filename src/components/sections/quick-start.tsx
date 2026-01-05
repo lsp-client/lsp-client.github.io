@@ -25,31 +25,51 @@ function highlightPython(src: string) {
     .split("\n")
     .map((line, i) => {
       const ci = line.indexOf("#");
-      const code = ci >= 0 ? line.slice(0, ci) : line;
+      const codePart = ci >= 0 ? line.slice(0, ci) : line;
       const comment = ci >= 0 ? line.slice(ci) : "";
       
-      // Highlight keywords
-      let highlighted = code.replace(
-        /\b(import|from|as|await|async|def|for|in|return|with|class)\b/g,
-        '__KW__$1__END__'
-      );
-      
-      // Highlight strings (both single and double quotes, and f-strings)
+      let highlighted = codePart;
+
+      // 1. Strings
       highlighted = highlighted.replace(
         /(f?(?:"[^"]*"|'[^']*'))/g,
         '__STR__$1__END__'
       );
-      
-      // Highlight numbers
+
+      // 2. Keywords
+      highlighted = highlighted.replace(
+        /\b(import|from|as|await|async|def|for|in|return|with|class|if|else|elif|while|try|except|finally)\b/g,
+        '__KW__$1__END__'
+      );
+
+      // 3. Classes and Functions
+      highlighted = highlighted.replace(
+        /\b([A-Z]\w+)\b/g,
+        '__CLS__$1__END__'
+      );
+      highlighted = highlighted.replace(
+        /\b([a-z_]\w+)(?=\s*\()/g,
+        '__FN__$1__END__'
+      );
+
+      // 4. Numbers
       highlighted = highlighted.replace(
         /\b(\d+)\b/g,
         '__NUM__$1__END__'
       );
+
+      // 5. Built-ins (simple ones)
+      highlighted = highlighted.replace(
+        /\b(print|range|len|type|int|str|list|dict|set|tuple)\b/g,
+        '__BI__$1__END__'
+      );
       
-      // Apply spans
       let out = esc(highlighted)
-        .replace(/__KW__(\w+)__END__/g, '<span class="tk-keyword">$1</span>')
         .replace(/__STR__(.+?)__END__/g, '<span class="tk-string">$1</span>')
+        .replace(/__KW__(\w+)__END__/g, '<span class="tk-keyword">$1</span>')
+        .replace(/__CLS__(\w+)__END__/g, '<span class="tk-class">$1</span>')
+        .replace(/__FN__(\w+)__END__/g, '<span class="tk-function">$1</span>')
+        .replace(/__BI__(\w+)__END__/g, '<span class="tk-builtin">$1</span>')
         .replace(/__NUM__(\d+)__END__/g, '<span class="tk-number">$1</span>');
       
       if (comment)
@@ -71,7 +91,7 @@ export function QuickStart() {
   };
 
   return (
-    <section className="py-32 relative z-10 bg-background" id="quick-start">
+    <section className="py-32 relative z-10" id="quick-start">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1">
@@ -104,49 +124,53 @@ export function QuickStart() {
           </div>
 
           <div className="relative group order-1 lg:order-2">
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[2rem] blur-2xl opacity-50 group-hover:opacity-75 transition duration-1000"></div>
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-indigo-500/20 rounded-[2.5rem] blur-3xl opacity-30 group-hover:opacity-50 transition duration-1000"></div>
             
-            <div className="code-panel relative rounded-2xl shadow-2xl overflow-hidden">
-              <div className="code-panel__header flex items-center justify-between px-6 py-4">
-                <div className="flex space-x-2">
-                  <div className="code-panel__dot code-panel__dot--1" />
-                  <div className="code-panel__dot code-panel__dot--2" />
-                  <div className="code-panel__dot code-panel__dot--3" />
+            <div className="code-panel relative rounded-2xl shadow-2xl overflow-hidden border border-border/50 glass">
+              <div className="code-panel__header flex items-center justify-between px-6 py-3 bg-muted/30 border-b border-border/50">
+                <div className="flex space-x-1.5">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
                 </div>
-                <div className="code-panel__filename flex items-center text-xs font-mono gap-2">
-                   <span className="opacity-50">/</span>
+                <div className="code-panel__filename flex items-center text-[11px] font-mono tracking-wider uppercase opacity-60">
+                   <span className="mr-1.5 opacity-40">~/</span>
                    <span>example.py</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 hover:bg-accent"
+                        className="h-7 w-7 hover:bg-muted rounded-md transition-colors"
                         onClick={copyToClipboard}
                     >
                         {copied ? (
-                        <Check className="h-4 w-4 text-green-500" />
+                        <Check className="h-3.5 w-3.5 text-green-500" />
                         ) : (
-                        <Copy className="h-4 w-4" />
+                        <Copy className="h-3.5 w-3.5 opacity-60" />
                         )}
                     </Button>
                 </div>
               </div>
               
-              <div className="code-panel__content px-6 py-5 overflow-x-auto">
-                <pre className="text-[13px] font-mono leading-[1.6]">
-                  <code dangerouslySetInnerHTML={{ __html: highlighted }} />
+              <div className="code-panel__content px-6 py-6 overflow-x-auto custom-scrollbar">
+                <pre className="text-[13.5px] font-mono leading-relaxed">
+                  <code 
+                    className="block min-w-full"
+                    dangerouslySetInnerHTML={{ __html: highlighted }} 
+                  />
                 </pre>
               </div>
               
-              <div className="absolute bottom-4 right-4">
-                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 text-green-500 text-xs font-mono border border-green-500/20">
-                    <Play className="w-3 h-3 fill-current" />
-                    <span>Running</span>
+              <div className="absolute bottom-5 right-6 pointer-events-none">
+                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/5 text-primary/70 text-[10px] font-mono border border-primary/10 backdrop-blur-md">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                    <span className="uppercase tracking-widest font-bold">LSP Connected</span>
                  </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
       
@@ -157,13 +181,24 @@ export function QuickStart() {
         }
         .line-number { 
             display: inline-block; 
-            width: 2.5rem; 
+            width: 2rem; 
             color: var(--code-line-number); 
             text-align: right; 
-            margin-right: 1.5rem; 
+            margin-right: 2rem; 
             user-select: none;
-            opacity: 0.6;
+            opacity: 0.4;
             flex-shrink: 0;
+            font-size: 0.85em;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+          height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: var(--border);
+          border-radius: 10px;
         }
       `}</style>
     </section>
