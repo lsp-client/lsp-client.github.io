@@ -36,7 +36,7 @@ export function Hero() {
 
         {/* Install Block - Opencode Style */}
         <div className="max-w-2xl mx-auto mb-10 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 w-full px-4 md:px-0">
-           <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden text-left transition-shadow hover:shadow-md">
+           <div className="rounded-xl border border-border glass shadow-sm overflow-hidden text-left transition-shadow hover:shadow-md">
               {/* Fake Tabs */}
               <div className="flex border-b border-border bg-muted/40">
                  <div className="px-6 py-3 text-sm font-medium border-b-2 border-primary bg-background text-foreground">openskills</div>
