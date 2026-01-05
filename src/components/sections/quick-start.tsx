@@ -36,7 +36,7 @@ function highlightPython(src: string) {
       
       // Highlight strings (both single and double quotes, and f-strings)
       highlighted = highlighted.replace(
-        /(f?"[^"]*"|f?'[^']*')/g,
+        /(f?(?:"[^"]*"|'[^']*'))/g,
         '__STR__$1__END__'
       );
       
@@ -49,7 +49,7 @@ function highlightPython(src: string) {
       // Apply spans
       let out = esc(highlighted)
         .replace(/__KW__(\w+)__END__/g, '<span class="tk-keyword">$1</span>')
-        .replace(/__STR__([^_]+)__END__/g, '<span class="tk-string">$1</span>')
+        .replace(/__STR__(.+?)__END__/g, '<span class="tk-string">$1</span>')
         .replace(/__NUM__(\d+)__END__/g, '<span class="tk-number">$1</span>');
       
       if (comment)
