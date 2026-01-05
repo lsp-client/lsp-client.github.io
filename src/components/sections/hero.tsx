@@ -38,7 +38,7 @@ export function Hero() {
 
         {/* Install Block - Opencode Style */}
         <div className="max-w-2xl mx-auto mb-10 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 w-full px-4 md:px-0">
-          <div className="rounded-xl border border-border glass shadow-sm overflow-hidden text-left transition-shadow hover:shadow-md">
+          <div className="rounded-xl border border-border glass overflow-hidden text-left transition-all hover:border-primary/20">
             {/* Fake Tabs */}
             <div className="flex border-b border-border bg-muted/40">
               <div className="px-6 py-3 text-sm font-medium border-b-2 border-primary bg-background text-foreground">
@@ -73,7 +73,7 @@ export function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-400">
           <Button
             size="xl"
-            className="w-full sm:w-auto font-semibold text-lg px-10 shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
+            className="w-full sm:w-auto font-semibold text-lg px-10 border transition-all hover:-translate-y-0.5"
             asChild
           >
             <a href="#quick-start">

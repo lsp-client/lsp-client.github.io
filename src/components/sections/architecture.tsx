@@ -56,7 +56,7 @@ export function Architecture() {
               System Architecture
             </h2>
             <p className="text-muted-foreground text-xl max-w-xl">
-              From Protocol to Intelligence. A layered stack evolving raw 
+              From Protocol to Intelligence. A layered stack evolving raw
               capabilities into semantic understanding.
             </p>
           </div>
@@ -72,14 +72,14 @@ export function Architecture() {
               rel="noopener noreferrer"
               className="group block relative"
             >
-              <Card className="h-full relative overflow-hidden rounded-2xl border border-border glass transition-all duration-300 hover:shadow-lg hover:border-primary/20 hover:scale-[1.01]">
+              <Card className="h-full relative overflow-hidden rounded-2xl border border-border glass transition-all duration-300 hover:border-primary/20 hover:scale-[1.01]">
                 <CardHeader className="relative">
                   <div className="flex items-center justify-between mb-4">
                     <div className="p-3 rounded-xl bg-muted text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                       <item.icon className="h-6 w-6" strokeWidth={1.5} />
                     </div>
                     <span className="font-mono text-xs tracking-wider uppercase opacity-50">
-                      {(index + 1).toString().padStart(2, '0')}
+                      {(index + 1).toString().padStart(2, "0")}
                     </span>
                   </div>
                   <div className="space-y-1">
@@ -91,7 +91,7 @@ export function Architecture() {
                     </CardTitle>
                   </div>
                 </CardHeader>
-                
+
                 <CardContent>
                   <CardDescription className="text-base leading-relaxed mb-6 text-muted-foreground">
                     {item.description}

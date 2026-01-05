@@ -34,8 +34,12 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(() => {
     if (typeof window === "undefined") return defaultTheme;
-    const stored = window.localStorage.getItem(storageKey) as Theme | null;
-    return stored ?? defaultTheme;
+    try {
+      const stored = window.localStorage.getItem(storageKey) as Theme | null;
+      return stored ?? defaultTheme;
+    } catch {
+      return defaultTheme;
+    }
   });
 
   useEffect(() => {
@@ -64,21 +68,38 @@ export function ThemeProvider({
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const listener = () => applyTheme();
 
-    if ("addEventListener" in media) media.addEventListener("change", listener);
-    else if (typeof (media as any).addListener === "function")
-      (media as any).addListener(listener);
+    if ("addEventListener" in media) {
+      media.addEventListener("change", listener);
+    } else {
+      // Fallback for legacy browsers (e.g. Safari < 14)
+      const legacyMedia = media as unknown as {
+        addListener: (l: () => void) => void;
+        removeListener: (l: () => void) => void;
+      };
+      if (typeof legacyMedia.addListener === "function") {
+        legacyMedia.addListener(listener);
+      }
+    }
 
     return () => {
-      if ("removeEventListener" in media)
+      if ("removeEventListener" in media) {
         media.removeEventListener("change", listener);
-      else if (typeof (media as any).removeListener === "function")
-        (media as any).removeListener(listener);
+      } else {
+        const legacyMedia = media as unknown as {
+          removeListener: (l: () => void) => void;
+        };
+        if (typeof legacyMedia.removeListener === "function") {
+          legacyMedia.removeListener(listener);
+        }
+      }
     };
   }, [theme]);
 
   const value = useMemo<ThemeProviderState>(() => {
     const setTheme = (theme: Theme) => {
-      window.localStorage.setItem(storageKey, theme);
+      try {
+        window.localStorage.setItem(storageKey, theme);
+      } catch {}
       setThemeState(theme);
     };
 

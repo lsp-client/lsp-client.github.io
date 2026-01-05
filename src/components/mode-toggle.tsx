@@ -2,25 +2,36 @@ import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 
+type Theme = "dark" | "light" | "system";
+
 export function ModeToggle() {
-  const themeApi =
-    typeof useTheme === "function"
-      ? useTheme()
-      : { theme: "light", setTheme: () => {} };
-  const theme = themeApi?.theme ?? "light";
-  const setThemeFn = themeApi?.setTheme ?? ((_: any) => {});
+  const themeApi = (typeof useTheme === "function" ? useTheme() : null) as {
+    theme: Theme;
+    setTheme: (t: Theme) => void;
+  } | null;
+
+  const theme = themeApi?.theme ?? "system";
+  const setThemeFn = themeApi?.setTheme ?? ((_t: Theme) => {});
   const toggle = () => {
-    const next = theme === "light" ? "dark" : "light";
-    try {
+    const resolvedTheme =
+      theme === "system"
+        ? window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light"
+        : theme;
+    const next = resolvedTheme === "light" ? "dark" : "light";
+
+    if (themeApi) {
       setThemeFn(next);
-    } finally {
-      const root = document.documentElement;
-      root.classList.remove("light", "dark");
-      root.classList.add(next);
-      try {
-        localStorage.setItem("lsp-client-theme", next);
-      } catch {}
+      return;
     }
+
+    const root = document.documentElement;
+    root.classList.remove("light", "dark");
+    root.classList.add(next);
+    try {
+      localStorage.setItem("lsp-client-theme", next);
+    } catch {}
   };
 
   return (
