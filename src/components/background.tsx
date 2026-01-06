@@ -1,10 +1,7 @@
 import { useEffect, useRef } from "react";
-import { useTheme } from "@/components/theme-provider";
 
 export function Background() {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
-	const themeApi = useTheme();
-	const _theme = themeApi?.theme ?? "light";
 
 	useEffect(() => {
 		const canvas = canvasRef.current;

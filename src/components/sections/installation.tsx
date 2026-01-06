@@ -77,7 +77,7 @@ export function Installation() {
 	const [copied, setCopied] = useState(false);
 
 	const tool = useMemo<ToolInstall>(
-		() => TOOLS.find((t) => t.id === selected) ?? TOOLS[0],
+		() => TOOLS.find((t) => t.id === selected) ?? (TOOLS[0] as ToolInstall),
 		[selected],
 	);
 

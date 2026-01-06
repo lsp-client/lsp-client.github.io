@@ -32,7 +32,7 @@ export function Hero() {
 	const [installTarget, setInstallTarget] = useState<InstallTargetId>("skill");
 	const installCmd =
 		INSTALL_TARGETS.find((t) => t.id === installTarget)?.command ??
-		INSTALL_TARGETS[0]?.command;
+		(INSTALL_TARGETS[0] as { command: string }).command;
 
 	const copyCommand = () => {
 		navigator.clipboard.writeText(installCmd);
