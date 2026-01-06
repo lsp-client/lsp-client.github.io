@@ -28,6 +28,8 @@ const INSTALL_TARGETS: Array<{
 ];
 
 export function Hero() {
+	const [isExpanded, setIsExpanded] = useState(false);
+	const [isExpandedAgentic, setIsExpandedAgentic] = useState(false);
 	const [copied, setCopied] = useState(false);
 	const [installTarget, setInstallTarget] = useState<InstallTargetId>("skill");
 	const installCmd =
@@ -41,7 +43,7 @@ export function Hero() {
 	};
 
 	return (
-		<section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-24 pb-12">
+		<section className="relative min-h-[90vh] flex flex-col items-center pt-32 md:pt-48 pb-12">
 			<div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
 				{/* Badge - Simple version number */}
 				<AppLink
@@ -58,8 +60,67 @@ export function Hero() {
 				</AppLink>
 
 				{/* Main Heading */}
-				<h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tighter text-foreground mb-6 max-w-6xl mx-auto leading-tight md:leading-[0.95] animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100 selection:bg-primary selection:text-primary-foreground">
-					IntelliSense <br /> for Agentic Coding
+				<h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tighter text-foreground mb-6 max-w-6xl mx-auto leading-tight md:leading-[1.15] animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100 selection:bg-primary selection:text-primary-foreground">
+					<div className="inline-flex flex-col items-center align-top group">
+						<button
+							type="button"
+							onClick={() => setIsExpanded(!isExpanded)}
+							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help transition-all"
+						>
+							IntelliSense
+						</button>
+						<div className="w-0 flex flex-col items-center">
+							<div
+								className={`grid transition-[grid-template-rows] duration-200 ease-in-out w-[90vw] md:w-[32rem] ${
+									isExpanded
+										? "grid-rows-[1fr]"
+										: "grid-rows-[0fr] group-hover:grid-rows-[1fr]"
+								}`}
+							>
+								<div className="overflow-hidden">
+									<div className="mt-4 mb-6 p-5 border border-border bg-background/80 backdrop-blur-md rounded-xl text-base md:text-lg font-normal text-muted-foreground text-left leading-relaxed mx-auto">
+										<span className="font-semibold text-foreground">
+											IntelliSense
+										</span>{" "}
+										is a general term for various code editing features
+										including: code completion, parameter info, quick info, and
+										member lists.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>{" "}
+					<br /> for{" "}
+					<div className="inline-flex flex-col items-center align-top group">
+						<button
+							type="button"
+							onClick={() => setIsExpandedAgentic(!isExpandedAgentic)}
+							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help transition-all"
+						>
+							Agentic Coding
+						</button>
+						<div className="w-0 flex flex-col items-center">
+							<div
+								className={`grid transition-[grid-template-rows] duration-200 ease-in-out w-[90vw] md:w-[32rem] ${
+									isExpandedAgentic
+										? "grid-rows-[1fr]"
+										: "grid-rows-[0fr] group-hover:grid-rows-[1fr]"
+								}`}
+							>
+								<div className="overflow-hidden">
+									<div className="mt-4 mb-6 p-5 border border-border bg-background/80 backdrop-blur-md rounded-xl text-base md:text-lg font-normal text-muted-foreground text-left leading-relaxed mx-auto">
+										<span className="font-semibold text-foreground">
+											Agentic Coding
+										</span>{" "}
+										refers to the practice of using AI agents to autonomously
+										write, debug, and refactor code, transforming the
+										development workflow from manual typing to high-level
+										orchestration.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</h1>
 
 				{/* Description - From README */}
