@@ -12,12 +12,12 @@ const INSTALL_TARGETS: Array<{
 }> = [
   {
     id: "skill",
-    label: "skill",
+    label: "Agent Skill",
     command: "openskills add lsp-client/lsp-skill",
   },
   {
     id: "cli-tool",
-    label: "cli tool",
+    label: "CLI tool",
     command: "uv tool install lsp-cli",
   },
   {
