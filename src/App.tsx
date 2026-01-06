@@ -70,16 +70,16 @@ export function App() {
 							{isHome ? (
 								<>
 									<a
-										href="#architecture"
-										className="text-muted-foreground hover:text-foreground transition-colors"
-									>
-										Architecture
-									</a>
-									<a
 										href="#installation"
 										className="text-muted-foreground hover:text-foreground transition-colors"
 									>
 										Installation
+									</a>
+									<a
+										href="#architecture"
+										className="text-muted-foreground hover:text-foreground transition-colors"
+									>
+										Architecture
 									</a>
 									<a
 										href="#languages"
@@ -152,8 +152,8 @@ export function App() {
 					{isHome ? (
 						<>
 							<Hero />
-							<Architecture />
 							<Installation />
+							<Architecture />
 							<Languages />
 						</>
 					) : blogSlug ? (
