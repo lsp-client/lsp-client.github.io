@@ -14,6 +14,12 @@ bun run build.ts
 
 # Run production server
 bun start
+
+# Lint and check formatting
+bun run lint
+
+# Auto-fix lint and formatting issues
+bun run lint:fix
 ```
 
 ### Build Options
@@ -25,8 +31,9 @@ bun run build.ts --help  # See all available options
 
 ## Code Style Guidelines
 
-### TypeScript
+### TypeScript & Linting
 
+- **Linter/Formatter**: We use [Biome](https://biomejs.dev/) for linting, formatting, and import sorting.
 - Strict mode is enabled in `tsconfig.json`
 - Use `noUncheckedIndexedAccess: true` for safer array/object access
 - Use absolute imports with `@/*` alias pointing to `./src/*`

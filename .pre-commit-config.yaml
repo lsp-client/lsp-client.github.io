@@ -1,0 +1,10 @@
+repos:
+  - repo: local
+    hooks:
+      - id: biome-check
+        name: biome check
+        entry: bunx biome check --write --no-errors-on-unmatched
+        language: system
+        files: \.(jsx?|tsx?|jsonc?|css)$
+
+
