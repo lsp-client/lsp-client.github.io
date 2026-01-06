@@ -12,7 +12,8 @@ interface ToolInstall {
 	command: string;
 }
 
-const INSTALL_CMD = "openskills add lsp-client/lsp-skill";
+const INSTALL_CMD =
+	"npm i -g openskills && openskills add lsp-client/lsp-skill";
 
 const TOOLS: ToolInstall[] = [
 	{
@@ -173,6 +174,18 @@ export function Installation() {
 							</div>
 							<div className="text-xs text-muted-foreground mt-3">
 								After running it, restart the tool to pick up the change.
+							</div>
+							<div className="text-xs text-muted-foreground mt-2">
+								See{" "}
+								<a
+									href="https://github.com/numman-ali/openskills"
+									target="_blank"
+									rel="noreferrer"
+									className="underline underline-offset-4 hover:text-foreground"
+								>
+									https://github.com/numman-ali/openskills
+								</a>{" "}
+								for OpenSkills documentation.
 							</div>
 						</div>
 					</div>

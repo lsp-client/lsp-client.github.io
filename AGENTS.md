@@ -15,9 +15,6 @@ bun run build.ts
 # Run production server
 bun start
 
-# Lint and check formatting
-bun run lint
-
 # Auto-fix lint and formatting issues
 bun run lint:fix
 ```
@@ -30,6 +27,10 @@ bun run build.ts --help  # See all available options
 ```
 
 ## Code Style Guidelines
+
+### Content
+
+- Always use English for text content.
 
 ### TypeScript & Linting
 

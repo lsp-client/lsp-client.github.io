@@ -93,18 +93,36 @@ export function Hero() {
 						</div>
 
 						{/* Command Area */}
-						<div className="p-6 md:p-8 flex items-center justify-between group bg-background">
-							<code className="font-mono text-sm md:text-lg text-foreground break-all tracking-tight">
-								{installCmd}
-							</code>
-							<Button
-								variant="ghost"
-								size="icon"
-								onClick={copyCommand}
-								className="ml-4 text-muted-foreground hover:text-foreground shrink-0 hover:bg-muted/50 rounded-lg h-10 w-10"
-							>
-								<Copy className={`h-5 w-5 ${copied ? "text-green-600" : ""}`} />
-							</Button>
+						<div className="p-6 md:p-8 bg-background">
+							<div className="flex items-center justify-between group">
+								<code className="font-mono text-sm md:text-lg text-foreground break-all tracking-tight">
+									{installCmd}
+								</code>
+								<Button
+									variant="ghost"
+									size="icon"
+									onClick={copyCommand}
+									className="ml-4 text-muted-foreground hover:text-foreground shrink-0 hover:bg-muted/50 rounded-lg h-10 w-10"
+								>
+									<Copy
+										className={`h-5 w-5 ${copied ? "text-green-600" : ""}`}
+									/>
+								</Button>
+							</div>
+							{installTarget === "skill" ? (
+								<div className="mt-3 text-xs text-muted-foreground">
+									See{" "}
+									<a
+										href="https://github.com/numman-ali/openskills"
+										target="_blank"
+										rel="noreferrer"
+										className="underline underline-offset-4 hover:text-foreground"
+									>
+										https://github.com/numman-ali/openskills
+									</a>{" "}
+									for OpenSkills documentation.
+								</div>
+							) : null}
 						</div>
 					</div>
 				</div>
