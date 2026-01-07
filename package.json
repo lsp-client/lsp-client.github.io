@@ -8,7 +8,8 @@
 		"start": "NODE_ENV=production bun src/index.ts",
 		"build": "bun run build.ts",
 		"lint": "biome check .",
-		"lint:fix": "biome check --write --unsafe ."
+		"lint:fix": "biome check --write --unsafe .",
+		"typecheck": "bunx tsc --noEmit"
 	},
 	"dependencies": {
 		"@radix-ui/react-label": "^2.1.7",

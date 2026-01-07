@@ -15,7 +15,7 @@ bun run build.ts
 # Run production server
 bun start
 
-# Auto-fix lint and formatting issues
+# Always run lint with auto-fixt
 bun run lint:fix
 ```
 

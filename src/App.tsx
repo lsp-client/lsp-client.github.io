@@ -1,5 +1,6 @@
 import { Github } from "lucide-react";
-import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppLink } from "@/components/app-link";
 import { Background } from "@/components/background";
 import { BlogIndex } from "@/components/blog/blog-index";
@@ -15,13 +16,63 @@ import { Button } from "@/components/ui/button";
 import { useLocation } from "@/lib/router";
 import { cn } from "@/lib/utils";
 
+const navLinkClassName =
+	"text-muted-foreground hover:text-foreground transition-colors";
+
+interface SectionNavLinkProps {
+	href: string;
+	children: ReactNode;
+}
+
+function SectionNavLink({ href, children }: SectionNavLinkProps) {
+	return (
+		<a href={href} className={navLinkClassName}>
+			{children}
+		</a>
+	);
+}
+
+interface RouteNavLinkProps {
+	href: string;
+	children: ReactNode;
+}
+
+function RouteNavLink({ href, children }: RouteNavLinkProps) {
+	return (
+		<AppLink href={href} className={navLinkClassName}>
+			{children}
+		</AppLink>
+	);
+}
+
+interface ExternalNavLinkProps {
+	href: string;
+	children: ReactNode;
+}
+
+function ExternalNavLink({ href, children }: ExternalNavLinkProps) {
+	return (
+		<a
+			href={href}
+			target="_blank"
+			rel="noopener noreferrer"
+			className={navLinkClassName}
+		>
+			{children}
+		</a>
+	);
+}
+
 export function App() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const { pathname } = useLocation();
-	const normalizedPathname = pathname.replace(/\/+$/, "") || "/";
+	const normalizedPathname = useMemo(
+		() => pathname.replace(/\/+$/, "") || "/",
+		[pathname],
+	);
 	const isHome = normalizedPathname === "/";
 
-	const blogSlug = (() => {
+	const blogSlug = useMemo(() => {
 		if (normalizedPathname === "/blog") return null;
 		if (!normalizedPathname.startsWith("/blog/")) return null;
 		const raw = normalizedPathname.slice("/blog/".length);
@@ -31,12 +82,16 @@ export function App() {
 		} catch {
 			return raw;
 		}
-	})();
+	}, [normalizedPathname]);
 
 	useEffect(() => {
 		const handleScroll = () => {
-			setIsScrolled(window.scrollY > 20);
+			setIsScrolled((prev) => {
+				const next = window.scrollY > 20;
+				return prev === next ? prev : next;
+			});
 		};
+		handleScroll();
 		window.addEventListener("scroll", handleScroll, { passive: true });
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
@@ -69,61 +124,25 @@ export function App() {
 						<nav className="hidden md:flex items-center gap-8 text-sm font-medium">
 							{isHome ? (
 								<>
-									<a
-										href="#installation"
-										className="text-muted-foreground hover:text-foreground transition-colors"
-									>
+									<SectionNavLink href="#installation">
 										Installation
-									</a>
-									<a
-										href="#architecture"
-										className="text-muted-foreground hover:text-foreground transition-colors"
-									>
+									</SectionNavLink>
+									<SectionNavLink href="#architecture">
 										Architecture
-									</a>
-									<a
-										href="#languages"
-										className="text-muted-foreground hover:text-foreground transition-colors"
-									>
-										Languages
-									</a>
-									<AppLink
-										href="/blog"
-										className="text-muted-foreground hover:text-foreground transition-colors"
-									>
-										Blog
-									</AppLink>
-									<a
-										href="https://github.com/lsp-client/lsp-client"
-										target="_blank"
-										rel="noreferrer"
-										className="text-muted-foreground hover:text-foreground transition-colors"
-									>
+									</SectionNavLink>
+									<SectionNavLink href="#languages">Languages</SectionNavLink>
+									<RouteNavLink href="/blog">Blog</RouteNavLink>
+									<ExternalNavLink href="https://github.com/lsp-client">
 										GitHub
-									</a>
+									</ExternalNavLink>
 								</>
 							) : (
 								<>
-									<AppLink
-										href="/"
-										className="text-muted-foreground hover:text-foreground transition-colors"
-									>
-										Home
-									</AppLink>
-									<AppLink
-										href="/blog"
-										className="text-muted-foreground hover:text-foreground transition-colors"
-									>
-										Blog
-									</AppLink>
-									<a
-										href="https://github.com/lsp-client/lsp-client"
-										target="_blank"
-										rel="noreferrer"
-										className="text-muted-foreground hover:text-foreground transition-colors"
-									>
+									<RouteNavLink href="/">Home</RouteNavLink>
+									<RouteNavLink href="/blog">Blog</RouteNavLink>
+									<ExternalNavLink href="https://github.com/lsp-client">
 										GitHub
-									</a>
+									</ExternalNavLink>
 								</>
 							)}
 						</nav>
@@ -136,9 +155,9 @@ export function App() {
 								asChild
 							>
 								<a
-									href="https://github.com/lsp-client/lsp-client"
+									href="https://github.com/lsp-client"
 									target="_blank"
-									rel="noopener"
+									rel="noopener noreferrer"
 								>
 									<Github className="w-3 h-3 mr-2" />
 									Star
