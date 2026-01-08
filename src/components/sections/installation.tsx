@@ -2,7 +2,7 @@ import { Check, Copy } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-type ToolId = "claude-code" | "cursor" | "windsurf" | "vscode" | "zed";
+type ToolId = "universal" | "opencode" | "claude-code" | "cursor" | "vscode";
 
 interface ToolInstall {
 	id: ToolId;
@@ -14,68 +14,69 @@ interface ToolInstall {
 
 const TOOLS: ToolInstall[] = [
 	{
+		id: "universal",
+		name: "Universal (Recommended)",
+		detail: "Install using OpenSkills CLI",
+		steps: [
+			"Install OpenSkills CLI via npm",
+			"Open your project directory",
+			"Install the LSP skill using openskills",
+		],
+		command:
+			"npm install -g openskills && openskills install lsp-client/lsp-skill",
+	},
+	{
+		id: "opencode",
+		name: "OpenCode",
+		detail: "Install as a local skill",
+		steps: [
+			"Open your project directory",
+			"Download and extract the skill to .opencode/skill",
+			"Restart OpenCode to load the new skill",
+		],
+		command:
+			"mkdir -p .opencode/skill/lsp-code-analysis && curl -L https://github.com/lsp-client/lsp-skill/releases/latest/download/lsp-code-analysis.zip -o lsp.zip && unzip lsp.zip -d .opencode/skill/lsp-code-analysis && rm lsp.zip",
+	},
+	{
 		id: "claude-code",
 		name: "Claude Code",
 		detail: "Install as a native plugin",
 		steps: [
-			"Open Claude Code in your project directory",
-			"Run the /plugin add command with the repository URL",
-			"Claude will automatically download and enable the skill",
+			"Run Claude Code in your project directory",
+			"Execute /plugin marketplace add lsp-client/lsp-skill",
+			"Execute /plugin install lsp-code-analysis@lsp-skill",
 		],
-		command: "claude /plugin add https://github.com/lsp-client/lsp-skill",
+		command: `/plugin marketplace add lsp-client/lsp-skill
+/plugin install lsp-code-analysis@lsp-skill`,
 	},
 	{
 		id: "cursor",
 		name: "Cursor",
-		detail: "Add to project-level skills directory",
+		detail: "Requires Nightly Build & Agent Skills Enabled",
 		steps: [
-			"Create a .cursor/skills directory in your project root",
-			"Clone or copy the lsp-skill repository into that folder",
-			"Cursor Agent will automatically detect and use the skill",
+			"Switch to Nightly build in Settings > General",
+			"Enable 'Agent Skills' in Settings > Beta",
+			"Extract the skill to .cursor/skills in your project",
 		],
 		command:
-			"mkdir -p .cursor/skills && git clone https://github.com/lsp-client/lsp-skill .cursor/skills/lsp-skill",
-	},
-	{
-		id: "windsurf",
-		name: "Windsurf",
-		detail: "Install to global Windsurf skills directory",
-		steps: [
-			"Create the Windsurf skills directory if it doesn't exist",
-			"Clone the lsp-skill repository into the global skills path",
-			"Restart Windsurf to enable the new capabilities",
-		],
-		command:
-			"mkdir -p ~/.codeium/windsurf/skills && git clone https://github.com/lsp-client/lsp-skill ~/.codeium/windsurf/skills/lsp-skill",
+			"mkdir -p .cursor/skills/lsp-code-analysis && curl -L https://github.com/lsp-client/lsp-skill/releases/latest/download/lsp-code-analysis.zip -o lsp.zip && unzip lsp.zip -d .cursor/skills/lsp-code-analysis && rm lsp.zip",
 	},
 	{
 		id: "vscode",
 		name: "VS Code",
 		detail: "Install for Cline or Roo Code extensions",
 		steps: [
-			"Open your project in VS Code",
-			"Install the skill into the .clinerules or custom instructions path",
-			"The agent will pick up the new tools and protocols",
+			"Open your project directory",
+			"Download and extract the skill to .skills/lsp-code-analysis",
+			"Configure your agent to use the new skill",
 		],
 		command:
-			"mkdir -p .skills && git clone https://github.com/lsp-client/lsp-skill .skills/lsp-skill",
-	},
-	{
-		id: "zed",
-		name: "Zed",
-		detail: "Install for Zed's integrated AI assistant",
-		steps: [
-			"Open your project in Zed",
-			"Clone the skill into your project's local instructions directory",
-			"The assistant will now have access to the LSP analysis tools",
-		],
-		command:
-			"mkdir -p .zed/skills && git clone https://github.com/lsp-client/lsp-skill .zed/skills/lsp-skill",
+			"mkdir -p .skills/lsp-code-analysis && curl -L https://github.com/lsp-client/lsp-skill/releases/latest/download/lsp-code-analysis.zip -o lsp.zip && unzip lsp.zip -d .skills/lsp-code-analysis && rm lsp.zip",
 	},
 ];
 
 export function Installation() {
-	const [selected, setSelected] = useState<ToolId>("claude-code");
+	const [selected, setSelected] = useState<ToolId>("universal");
 	const [copied, setCopied] = useState(false);
 
 	const tool = useMemo<ToolInstall>(
@@ -169,24 +170,13 @@ export function Installation() {
 						<div>
 							<div className="text-sm font-semibold mb-3">Command</div>
 							<div className="rounded-2xl border border-border/70 bg-background/50 px-5 py-4">
-								<code className="font-mono text-sm text-foreground break-all block select-all">
+								<code className="font-mono text-sm text-foreground block select-all whitespace-pre-wrap">
 									{tool.command}
 								</code>
 							</div>
 							<div className="text-xs text-muted-foreground mt-3">
-								After running it, restart the tool to pick up the change.
-							</div>
-							<div className="text-xs text-muted-foreground mt-2">
-								See{" "}
-								<a
-									href="https://github.com/numman-ali/openskills"
-									target="_blank"
-									rel="noreferrer"
-									className="underline underline-offset-4 hover:text-foreground"
-								>
-									https://github.com/numman-ali/openskills
-								</a>{" "}
-								for OpenSkills documentation.
+								After running it, you may need to restart the tool to pick up
+								the change.
 							</div>
 						</div>
 					</div>

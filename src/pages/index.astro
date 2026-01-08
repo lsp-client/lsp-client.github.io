@@ -6,10 +6,17 @@ import { Hero } from "@/components/sections/hero";
 import { Installation } from "@/components/sections/installation";
 import { Languages } from "@/components/sections/languages";
 import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const sortedPosts = posts.sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+);
+const latestPost = sortedPosts[0];
 ---
 
 <Layout>
-  <Hero client:load />
+  <Hero client:load latestPostSlug={latestPost?.slug} />
   <AgentWorkflow client:visible />
   <Installation client:visible />
   <Architecture client:visible />

@@ -4,10 +4,6 @@ import { AppLink } from "@/components/app-link";
 import { ModeToggle } from "@/components/mode-toggle";
 import { buttonVariants } from "@/components/ui/button";
 
-const { pathname } = Astro.url;
-const normalizedPathname = pathname.replace(/\/+$/, "") || "/";
-const isHome = normalizedPathname === "/";
-
 const navLinkClassName =
   "text-muted-foreground hover:text-foreground transition-colors";
 ---
@@ -27,49 +23,16 @@ const navLinkClassName =
     </div>
 
     <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
-      {
-        isHome ? (
-          <>
-            <a href="#installation" class={navLinkClassName}>
-              Installation
-            </a>
-            <a href="#architecture" class={navLinkClassName}>
-              Architecture
-            </a>
-            <a href="#languages" class={navLinkClassName}>
-              Languages
-            </a>
-            <AppLink href="/blog" className={navLinkClassName}>
-              Blog
-            </AppLink>
-            <a
-              href="https://github.com/lsp-client"
-              target="_blank"
-              rel="noopener noreferrer"
-              class={navLinkClassName}
-            >
-              GitHub
-            </a>
-          </>
-        ) : (
-          <>
-            <AppLink href="/" className={navLinkClassName}>
-              Home
-            </AppLink>
-            <AppLink href="/blog" className={navLinkClassName}>
-              Blog
-            </AppLink>
-            <a
-              href="https://github.com/lsp-client"
-              target="_blank"
-              rel="noopener noreferrer"
-              class={navLinkClassName}
-            >
-              GitHub
-            </a>
-          </>
-        )
-      }
+      <AppLink href="/" className={navLinkClassName}> Home </AppLink>
+      <AppLink href="/blog" className={navLinkClassName}> Blog </AppLink>
+      <a
+        href="https://github.com/lsp-client"
+        target="_blank"
+        rel="noopener noreferrer"
+        class={navLinkClassName}
+      >
+        GitHub
+      </a>
     </nav>
 
     <div class="flex items-center gap-4">

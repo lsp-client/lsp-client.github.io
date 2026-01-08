@@ -52,6 +52,11 @@ const markdownComponents: Components = {
 			{children}
 		</ul>
 	),
+	ol: ({ children }) => (
+		<ol className="space-y-2 pl-5 list-decimal text-foreground/90 text-lg leading-relaxed mb-6 marker:text-primary/50">
+			{children}
+		</ol>
+	),
 	code: ({ className, children, ...props }) => {
 		const match = /language-(\w+)/.exec(className || "");
 		const isBlock = !!match || (children as string)?.includes?.("\n");

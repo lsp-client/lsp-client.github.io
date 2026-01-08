@@ -13,7 +13,7 @@ const INSTALL_TARGETS: Array<{
 	{
 		id: "skill",
 		label: "Agent Skill",
-		command: "openskills install lsp-client/lsp-skill",
+		command: "openskills install lsp-client/lsp-skill --global",
 	},
 	{
 		id: "cli-tool",
@@ -27,7 +27,7 @@ const INSTALL_TARGETS: Array<{
 	},
 ];
 
-export function Hero() {
+export function Hero({ latestPostSlug }: { latestPostSlug?: string }) {
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [isExpandedAgentic, setIsExpandedAgentic] = useState(false);
 	const [copied, setCopied] = useState(false);
@@ -47,7 +47,7 @@ export function Hero() {
 			<div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
 				{/* Badge - Simple version number */}
 				<AppLink
-					href="/blog/latest-update"
+					href={latestPostSlug ? `/blog/${latestPostSlug}` : "/blog"}
 					aria-label="Latest Update"
 					className="inline-flex items-center gap-2 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 hover:opacity-90 transition-opacity"
 				>
