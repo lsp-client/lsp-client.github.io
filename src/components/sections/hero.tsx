@@ -43,7 +43,7 @@ export function Hero() {
 	};
 
 	return (
-		<section className="relative min-h-[90vh] flex flex-col items-center pt-32 md:pt-48 pb-12">
+		<section className="relative min-h-[90vh] flex flex-col items-center pt-24 md:pt-36 pb-20">
 			<div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
 				{/* Badge - Simple version number */}
 				<AppLink
@@ -90,14 +90,16 @@ export function Hero() {
 							</div>
 						</div>
 					</div>{" "}
-					<br /> for{" "}
+					<br />
+					Designed for
+					<br />{" "}
 					<div className="inline-flex flex-col items-center align-top group">
 						<button
 							type="button"
 							onClick={() => setIsExpandedAgentic(!isExpandedAgentic)}
 							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help transition-all"
 						>
-							Agentic Coding
+							Coding Agent
 						</button>
 						<div className="w-0 flex flex-col items-center">
 							<div
@@ -110,12 +112,10 @@ export function Hero() {
 								<div className="overflow-hidden">
 									<div className="mt-4 mb-6 p-5 border border-border bg-background/80 backdrop-blur-md rounded-xl text-base md:text-lg font-normal text-muted-foreground text-left leading-relaxed mx-auto">
 										<span className="font-semibold text-foreground">
-											Agentic Coding
+											Coding Agent
 										</span>{" "}
-										refers to the practice of using AI agents to autonomously
-										write, debug, and refactor code, transforming the
-										development workflow from manual typing to high-level
-										orchestration.
+										is an AI system that can plan, write, debug, and refactor
+										code autonomously.
 									</div>
 								</div>
 							</div>

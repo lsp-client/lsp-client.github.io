@@ -1,0 +1,4 @@
+check:
+	bun run lint:fix
+	bun run typecheck
+	bun run build

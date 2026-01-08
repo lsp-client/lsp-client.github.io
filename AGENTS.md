@@ -9,14 +9,14 @@ bun install
 # Start development server with HMR
 bun dev
 
+# Run all checks (lint:fix + typecheck + build)
+just check
+
 # Build for production
 bun run build.ts
 
 # Run production server
 bun start
-
-# Always run lint with auto-fixt
-bun run lint:fix
 ```
 
 ### Build Options

@@ -121,7 +121,7 @@ export function BlogIndex({ className }: Props) {
 									href={`/blog/${post.slug}`}
 									className="block group"
 								>
-									<Card className="glass transition-all duration-300 hover:border-primary/20 hover:scale-[1.01]">
+									<Card className="glass scale-100 will-change-transform transition-[transform,scale,border-color] duration-300 hover:border-primary/20 hover:scale-[1.01]">
 										<CardHeader>
 											<div className="flex items-start justify-between gap-6">
 												<div className="min-w-0">

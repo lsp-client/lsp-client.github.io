@@ -112,7 +112,7 @@ export function QuickStart() {
 								},
 							].map((step, i) => (
 								<div key={step.title} className="flex items-start group">
-									<div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-bold text-xl mr-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+									<div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-bold text-xl mr-6 scale-100 will-change-transform group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-[transform,scale,background-color,color] duration-300">
 										{i + 1}
 									</div>
 									<div>
