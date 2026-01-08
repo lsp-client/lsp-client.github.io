@@ -1,5 +1,6 @@
 import { ArrowLeft } from "lucide-react";
-import { type BlogBlock, getBlogPost } from "@/blog/posts";
+import ReactMarkdown, { type Components } from "react-markdown";
+import { getBlogPost } from "@/blog/posts";
 import { AppLink } from "@/components/app-link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,56 +22,63 @@ function formatDate(iso: string) {
 	}).format(date);
 }
 
-function Block({ block }: { block: BlogBlock }) {
-	switch (block.type) {
-		case "h2":
+const markdownComponents: Components = {
+	h2: ({ children }) => (
+		<h2 className="text-2xl md:text-3xl font-display font-bold tracking-tight mt-10 mb-4 text-balance">
+			{children}
+		</h2>
+	),
+	p: ({ children }) => (
+		<p className="text-foreground/90 text-lg leading-relaxed mb-6">
+			{children}
+		</p>
+	),
+	blockquote: ({ children }) => (
+		<blockquote className="pl-6 border-l-2 border-primary my-8 italic text-lg text-foreground/80">
+			{children}
+		</blockquote>
+	),
+	ul: ({ children }) => (
+		<ul className="space-y-2 pl-5 list-disc text-foreground/90 text-lg leading-relaxed mb-6 marker:text-primary/50">
+			{children}
+		</ul>
+	),
+	code: ({ className, children, ...props }) => {
+		const match = /language-(\w+)/.exec(className || "");
+		const isBlock = !!match || (children as string)?.includes?.("\n");
+
+		if (!isBlock && !match) {
 			return (
-				<h2 className="text-2xl md:text-3xl font-display font-bold tracking-tight mt-10 mb-4 text-balance">
-					{block.text}
-				</h2>
+				<code
+					className="bg-secondary px-1.5 py-0.5 rounded-md font-mono text-sm"
+					{...props}
+				>
+					{children}
+				</code>
 			);
-		case "p":
-			return (
-				<p className="text-foreground/90 text-lg leading-relaxed mb-6">
-					{block.text}
-				</p>
-			);
-		case "quote":
-			return (
-				<blockquote className="pl-6 border-l-2 border-primary my-8 italic text-lg text-foreground/80">
-					{block.text}
-				</blockquote>
-			);
-		case "ul":
-			return (
-				<ul className="space-y-2 pl-5 list-disc text-foreground/90 text-lg leading-relaxed mb-6 marker:text-primary/50">
-					{block.items.map((item) => (
-						<li key={item}>{item}</li>
-					))}
-				</ul>
-			);
-		case "code":
-			return (
-				<div className="code-panel rounded-xl overflow-hidden my-8">
-					<div className="code-panel__header px-4 py-3 flex items-center justify-between select-none">
-						<div className="flex items-center gap-1.5">
-							<div className="code-panel__dot code-panel__dot--1" />
-							<div className="code-panel__dot code-panel__dot--2" />
-							<div className="code-panel__dot code-panel__dot--3" />
-						</div>
-						<span className="code-panel__filename text-xs font-mono opacity-80">
-							{block.language ?? "text"}
-						</span>
+		}
+
+		return (
+			<div className="code-panel rounded-xl overflow-hidden my-8">
+				<div className="code-panel__header px-4 py-3 flex items-center justify-between select-none">
+					<div className="flex items-center gap-1.5">
+						<div className="code-panel__dot code-panel__dot--1" />
+						<div className="code-panel__dot code-panel__dot--2" />
+						<div className="code-panel__dot code-panel__dot--3" />
 					</div>
-					<pre className="code-panel__content p-5 overflow-x-auto text-sm md:text-[13px] leading-relaxed font-mono">
-						<code>{block.code}</code>
-					</pre>
+					<span className="code-panel__filename text-xs font-mono opacity-80">
+						{match ? match[1] : "text"}
+					</span>
 				</div>
-			);
-		default:
-			return null;
-	}
-}
+				<pre className="code-panel__content p-5 overflow-x-auto text-sm md:text-[13px] leading-relaxed font-mono">
+					<code className={className} {...props}>
+						{children}
+					</code>
+				</pre>
+			</div>
+		);
+	},
+};
 
 export function BlogPost({ slug, className }: Props) {
 	const post = getBlogPost(slug);
@@ -136,9 +144,9 @@ export function BlogPost({ slug, className }: Props) {
 				</header>
 
 				<article className="space-y-2 pb-20 max-w-[680px] mx-auto">
-					{post.blocks.map((block, idx) => (
-						<Block key={`${block.type}-${idx}`} block={block} />
-					))}
+					<ReactMarkdown components={markdownComponents}>
+						{post.content}
+					</ReactMarkdown>
 				</article>
 
 				<div className="border-t border-border/70 pt-10 pb-16">
