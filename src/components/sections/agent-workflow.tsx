@@ -238,9 +238,13 @@ export function AgentWorkflow() {
 	// Auto scroll to bottom
 	useEffect(() => {
 		if (scrollRef.current) {
-			scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+			const isTyping = step === 1 || step === 5;
+			scrollRef.current.scrollTo({
+				top: scrollRef.current.scrollHeight,
+				behavior: isTyping ? "auto" : "smooth",
+			});
 		}
-	}, []);
+	}, [step]);
 
 	return (
 		<section className="py-24 bg-background relative overflow-hidden">
@@ -336,7 +340,7 @@ export function AgentWorkflow() {
 						{/* Terminal Content */}
 						<div
 							ref={scrollRef}
-							className="p-6 h-[500px] overflow-y-auto text-[#D4D4D4] space-y-6 scroll-smooth"
+							className="p-6 h-[500px] overflow-y-auto text-[#D4D4D4] space-y-6"
 						>
 							{/* Header */}
 							<div className="mb-6 animate-in fade-in duration-700">

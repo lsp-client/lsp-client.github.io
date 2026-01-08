@@ -12,64 +12,65 @@ interface ToolInstall {
 	command: string;
 }
 
-const INSTALL_CMD =
-	"npm i -g openskills && openskills add lsp-client/lsp-skill";
-
 const TOOLS: ToolInstall[] = [
 	{
 		id: "claude-code",
 		name: "Claude Code",
-		detail: "Install and enable from your project directory",
+		detail: "Install as a native plugin",
 		steps: [
-			"Open your project folder (a git repo is recommended)",
-			"Run the command below in Claude Code’s terminal",
-			"Restart Claude Code to pick up the change",
+			"Open Claude Code in your project directory",
+			"Run the /plugin add command with the repository URL",
+			"Claude will automatically download and enable the skill",
 		],
-		command: INSTALL_CMD,
+		command: "claude /plugin add https://github.com/lsp-client/lsp-skill",
 	},
 	{
 		id: "cursor",
 		name: "Cursor",
-		detail: "Install via the built-in terminal",
+		detail: "Add to project-level skills directory",
 		steps: [
-			"Open your project in Cursor",
-			"Open Terminal (or the bottom panel) and run the command below",
-			"Reload Window / restart Cursor to pick up the change",
+			"Create a .cursor/skills directory in your project root",
+			"Clone or copy the lsp-skill repository into that folder",
+			"Cursor Agent will automatically detect and use the skill",
 		],
-		command: INSTALL_CMD,
+		command:
+			"mkdir -p .cursor/skills && git clone https://github.com/lsp-client/lsp-skill .cursor/skills/lsp-skill",
 	},
 	{
 		id: "windsurf",
 		name: "Windsurf",
-		detail: "Install via the built-in terminal",
+		detail: "Install to global Windsurf skills directory",
 		steps: [
-			"Open your project in Windsurf",
-			"Run the command below in the built-in terminal",
-			"Restart the app to pick up the change",
+			"Create the Windsurf skills directory if it doesn't exist",
+			"Clone the lsp-skill repository into the global skills path",
+			"Restart Windsurf to enable the new capabilities",
 		],
-		command: INSTALL_CMD,
+		command:
+			"mkdir -p ~/.codeium/windsurf/skills && git clone https://github.com/lsp-client/lsp-skill ~/.codeium/windsurf/skills/lsp-skill",
 	},
 	{
 		id: "vscode",
 		name: "VS Code",
-		detail: "Install via the integrated terminal",
+		detail: "Install for Cline or Roo Code extensions",
 		steps: [
 			"Open your project in VS Code",
-			"Run the command below in the integrated terminal",
-			"Reload Window / restart VS Code",
+			"Install the skill into the .clinerules or custom instructions path",
+			"The agent will pick up the new tools and protocols",
 		],
-		command: INSTALL_CMD,
+		command:
+			"mkdir -p .skills && git clone https://github.com/lsp-client/lsp-skill .skills/lsp-skill",
 	},
 	{
 		id: "zed",
 		name: "Zed",
-		detail: "Install from the project terminal",
+		detail: "Install for Zed's integrated AI assistant",
 		steps: [
 			"Open your project in Zed",
-			"Open Terminal and run the command below",
-			"Restart Zed to pick up the change",
+			"Clone the skill into your project's local instructions directory",
+			"The assistant will now have access to the LSP analysis tools",
 		],
-		command: INSTALL_CMD,
+		command:
+			"mkdir -p .zed/skills && git clone https://github.com/lsp-client/lsp-skill .zed/skills/lsp-skill",
 	},
 ];
 

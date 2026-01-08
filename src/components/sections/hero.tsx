@@ -1,4 +1,4 @@
-import { ArrowRight, Copy } from "lucide-react";
+import { ArrowRight, Bot, Copy, Terminal } from "lucide-react";
 import { useState } from "react";
 import { AppLink } from "@/components/app-link";
 import { Button } from "@/components/ui/button";
@@ -78,13 +78,29 @@ export function Hero() {
 								}`}
 							>
 								<div className="overflow-hidden">
-									<div className="mt-4 mb-6 p-5 border border-border bg-background/80 backdrop-blur-md rounded-xl text-base md:text-lg font-normal text-muted-foreground text-left leading-relaxed mx-auto">
-										<span className="font-semibold text-foreground">
-											IntelliSense
+									<div className="mt-4 mb-6 p-5 border border-border bg-background/80 backdrop-blur-md rounded-xl text-base md:text-lg font-normal text-muted-foreground text-left hyphens-auto leading-relaxed mx-auto font-sans tracking-normal">
+										<span className="inline-flex items-center gap-2 text-foreground font-semibold align-bottom">
+											<Terminal className="w-5 h-5 text-blue-500" />
+											<a
+												href="https://code.visualstudio.com/docs/editor/intellisense"
+												target="_blank"
+												rel="noopener noreferrer"
+												className="hover:underline underline-offset-4"
+											>
+												IntelliSense
+											</a>
 										</span>{" "}
-										is a general term for various code editing features
-										including: code completion, parameter info, quick info, and
-										member lists.
+										is designed for editors, leveraging the{" "}
+										<a
+											href="https://microsoft.github.io/language-server-protocol/"
+											target="_blank"
+											rel="noopener noreferrer"
+											className="text-foreground hover:underline underline-offset-4 font-medium"
+										>
+											Language Server Protocol
+										</a>{" "}
+										to provide advanced code capabilities; however, these
+										features are difficult for LLMs to utilize directly.
 									</div>
 								</div>
 							</div>
@@ -110,12 +126,14 @@ export function Hero() {
 								}`}
 							>
 								<div className="overflow-hidden">
-									<div className="mt-4 mb-6 p-5 border border-border bg-background/80 backdrop-blur-md rounded-xl text-base md:text-lg font-normal text-muted-foreground text-left leading-relaxed mx-auto">
-										<span className="font-semibold text-foreground">
+									<div className="mt-4 mb-6 p-5 border border-border bg-background/80 backdrop-blur-md rounded-xl text-base md:text-lg font-normal text-muted-foreground text-left hyphens-auto leading-relaxed mx-auto font-sans tracking-normal">
+										<span className="inline-flex items-center gap-2 text-foreground font-semibold align-bottom">
+											<Bot className="w-5 h-5 text-primary" />
 											Coding Agent
 										</span>{" "}
-										is an AI system that can plan, write, debug, and refactor
-										code autonomously.
+										driven by LLMs (like Claude Code) execute programming tasks
+										in repositories. This project enables these agents to enjoy
+										the benefits of IntelliSense just like human programmers.
 									</div>
 								</div>
 							</div>
