@@ -43,7 +43,7 @@ export function Hero() {
 	};
 
 	return (
-		<section className="relative min-h-[80vh] flex flex-col items-center justify-center py-20">
+		<section className="relative min-h-[calc(100vh-6rem)] flex flex-col items-center justify-center pt-8 pb-32">
 			<div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
 				{/* Badge - Simple version number */}
 				<AppLink
