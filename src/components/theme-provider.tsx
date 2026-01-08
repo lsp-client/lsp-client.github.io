@@ -1,6 +1,7 @@
 import {
 	createContext,
 	type ReactNode,
+	useCallback,
 	useContext,
 	useEffect,
 	useMemo,
@@ -30,8 +31,25 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 export function ThemeProvider({
 	children,
 	defaultTheme = "system",
-	storageKey = "vite-ui-theme",
+	storageKey = "lsp-client-theme",
 }: ThemeProviderProps) {
+	const resolveTheme = useCallback((theme: Theme) => {
+		if (theme !== "system") return theme;
+		return window.matchMedia("(prefers-color-scheme: dark)").matches
+			? "dark"
+			: "light";
+	}, []);
+
+	const applyTheme = useCallback(
+		(theme: Theme) => {
+			const root = window.document.documentElement;
+			const resolved = resolveTheme(theme);
+			root.classList.toggle("dark", resolved === "dark");
+			root.style.colorScheme = resolved;
+		},
+		[resolveTheme],
+	);
+
 	const [theme, setThemeState] = useState<Theme>(() => {
 		if (typeof window === "undefined") return defaultTheme;
 		try {
@@ -43,30 +61,12 @@ export function ThemeProvider({
 	});
 
 	useEffect(() => {
-		const root = window.document.documentElement;
-
-		const applyTheme = () => {
-			root.classList.remove("light", "dark");
-
-			if (theme === "system") {
-				const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-					.matches
-					? "dark"
-					: "light";
-
-				root.classList.add(systemTheme);
-				return;
-			}
-
-			root.classList.add(theme);
-		};
-
-		applyTheme();
+		applyTheme(theme);
 
 		if (theme !== "system") return;
 
 		const media = window.matchMedia("(prefers-color-scheme: dark)");
-		const listener = () => applyTheme();
+		const listener = () => applyTheme(theme);
 
 		if ("addEventListener" in media) {
 			media.addEventListener("change", listener);
@@ -93,10 +93,11 @@ export function ThemeProvider({
 				}
 			}
 		};
-	}, [theme]);
+	}, [theme, applyTheme]);
 
 	const value = useMemo<ThemeProviderState>(() => {
 		const setTheme = (theme: Theme) => {
+			applyTheme(theme);
 			try {
 				window.localStorage.setItem(storageKey, theme);
 			} catch {}
@@ -104,7 +105,7 @@ export function ThemeProvider({
 		};
 
 		return { theme, setTheme };
-	}, [storageKey, theme]);
+	}, [storageKey, theme, applyTheme]);
 
 	return (
 		<ThemeProviderContext.Provider value={value}>

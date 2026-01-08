@@ -2,14 +2,14 @@
 import { Github } from "lucide-react";
 import { AppLink } from "@/components/app-link";
 import { ModeToggle } from "@/components/mode-toggle";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 const { pathname } = Astro.url;
 const normalizedPathname = pathname.replace(/\/+$/, "") || "/";
 const isHome = normalizedPathname === "/";
 
-const navLinkClassName = "text-muted-foreground hover:text-foreground transition-colors";
+const navLinkClassName =
+  "text-muted-foreground hover:text-foreground transition-colors";
 ---
 
 <header
@@ -27,59 +27,93 @@ const navLinkClassName = "text-muted-foreground hover:text-foreground transition
     </div>
 
     <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
-      {isHome ? (
-        <>
-          <a href="#installation" class={navLinkClassName}>Installation</a>
-          <a href="#architecture" class={navLinkClassName}>Architecture</a>
-          <a href="#languages" class={navLinkClassName}>Languages</a>
-          <AppLink href="/blog" className={navLinkClassName}>Blog</AppLink>
-          <a href="https://github.com/lsp-client" target="_blank" rel="noopener noreferrer" class={navLinkClassName}>GitHub</a>
-        </>
-      ) : (
-        <>
-          <AppLink href="/" className={navLinkClassName}>Home</AppLink>
-          <AppLink href="/blog" className={navLinkClassName}>Blog</AppLink>
-          <a href="https://github.com/lsp-client" target="_blank" rel="noopener noreferrer" class={navLinkClassName}>GitHub</a>
-        </>
-      )}
+      {
+        isHome ? (
+          <>
+            <a href="#installation" class={navLinkClassName}>
+              Installation
+            </a>
+            <a href="#architecture" class={navLinkClassName}>
+              Architecture
+            </a>
+            <a href="#languages" class={navLinkClassName}>
+              Languages
+            </a>
+            <AppLink href="/blog" className={navLinkClassName}>
+              Blog
+            </AppLink>
+            <a
+              href="https://github.com/lsp-client"
+              target="_blank"
+              rel="noopener noreferrer"
+              class={navLinkClassName}
+            >
+              GitHub
+            </a>
+          </>
+        ) : (
+          <>
+            <AppLink href="/" className={navLinkClassName}>
+              Home
+            </AppLink>
+            <AppLink href="/blog" className={navLinkClassName}>
+              Blog
+            </AppLink>
+            <a
+              href="https://github.com/lsp-client"
+              target="_blank"
+              rel="noopener noreferrer"
+              class={navLinkClassName}
+            >
+              GitHub
+            </a>
+          </>
+        )
+      }
     </nav>
 
     <div class="flex items-center gap-4">
-      <ThemeProvider client:load>
-        <ModeToggle />
-      </ThemeProvider>
-      <Button
-        size="sm"
-        className="hidden sm:flex font-mono text-xs"
-        asChild
+      <ModeToggle client:load />
+      <a
+        href="https://github.com/lsp-client"
+        target="_blank"
+        rel="noopener noreferrer"
+        class={buttonVariants({
+          size: "sm",
+          className: "hidden sm:flex font-mono text-xs",
+        })}
       >
-        <a
-          href="https://github.com/lsp-client"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Github className="w-3 h-3 mr-2" />
-          Star
-        </a>
-      </Button>
+        <Github className="size-3" />
+        Star
+      </a>
     </div>
   </div>
 </header>
 
 <script>
-  const header = document.getElementById('main-header');
+  const header = document.getElementById("main-header");
   const handleScroll = () => {
     if (!header) return;
     if (window.scrollY > 20) {
-      header.classList.add('border-b', 'border-border/50', 'glass-strong', 'py-0');
-      header.classList.remove('bg-transparent', 'border-transparent', 'py-2');
+      header.classList.add(
+        "border-b",
+        "border-border/50",
+        "glass-strong",
+        "py-0"
+      );
+      header.classList.remove("bg-transparent", "border-transparent", "py-2");
     } else {
-      header.classList.remove('border-b', 'border-border/50', 'glass-strong', 'py-0');
-      header.classList.add('bg-transparent', 'border-transparent', 'py-2');
+      header.classList.remove(
+        "border-b",
+        "border-border/50",
+        "glass-strong",
+        "py-0"
+      );
+      header.classList.add("bg-transparent", "border-transparent", "py-2");
     }
   };
-  
-  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
   // Initial check
   handleScroll();
 </script>

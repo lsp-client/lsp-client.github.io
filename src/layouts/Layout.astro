@@ -1,53 +1,62 @@
 ---
 import Header from "@/components/Header.astro";
-import { Footer } from "@/components/sections/footer";
 import { Background } from "@/components/background";
+import { Footer } from "@/components/sections/footer";
 import "@/index.css";
 
 interface Props {
-	title?: string;
-    description?: string;
+  title?: string;
+  description?: string;
 }
 
-const { title = "LSP Client Ecosystem: IntelliSense for Agentic Coding", description } = Astro.props;
+const {
+  title = "LSP Client Ecosystem: IntelliSense for Agentic Coding",
+  description,
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="scroll-smooth">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={description || "LSP Client Ecosystem"} />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300..800&family=Google+Sans+Code:wght@400..700&display=swap" rel="stylesheet">
-		<title>{title}</title>
-        <script is:inline>
-            // Inline theme script to prevent FOUC
-            const getTheme = () => {
-                if (typeof localStorage !== 'undefined' && localStorage.getItem('lsp-client-theme')) {
-                    return localStorage.getItem('lsp-client-theme');
-                }
-                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    return 'dark';
-                }
-                return 'light'; // Default
-            };
-            const theme = getTheme();
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        </script>
-	</head>
-	<body class="min-h-screen relative overflow-x-hidden font-sans bg-background text-foreground selection:bg-primary/20">
-        <Background client:load />
-        <Header />
-        <main class="pt-24 min-h-[calc(100vh-4rem)]">
-            <slot />
-        </main>
-        <Footer />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description || "LSP Client Ecosystem"} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300..800&family=Google+Sans+Code:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+    <script is:inline>
+      // Inline theme script to prevent FOUC
+      const getTheme = () => {
+        if (typeof localStorage !== "undefined") {
+          const stored = localStorage.getItem("lsp-client-theme");
+          if (stored === "dark" || stored === "light") return stored;
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light"; // Default
+      };
+      const theme = getTheme();
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+  <body
+    class="min-h-screen relative overflow-x-hidden font-sans bg-background text-foreground selection:bg-primary/20"
+  >
+    <Background client:load />
+    <Header />
+    <main class="pt-24 min-h-[calc(100vh-4rem)]">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>

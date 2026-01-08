@@ -65,7 +65,7 @@ export function Hero() {
 						<button
 							type="button"
 							onClick={() => setIsExpanded(!isExpanded)}
-							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help transition-all"
+							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help"
 						>
 							IntelliSense
 						</button>
@@ -97,7 +97,7 @@ export function Hero() {
 						<button
 							type="button"
 							onClick={() => setIsExpandedAgentic(!isExpandedAgentic)}
-							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help transition-all"
+							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help"
 						>
 							Coding Agent
 						</button>
