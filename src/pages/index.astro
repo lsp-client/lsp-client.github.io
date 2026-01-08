@@ -1,0 +1,14 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Hero } from '@/components/sections/hero';
+import { Installation } from '@/components/sections/installation';
+import { Architecture } from '@/components/sections/architecture';
+import { Languages } from '@/components/sections/languages';
+---
+
+<Layout>
+  <Hero client:load />
+  <Installation client:visible />
+  <Architecture client:visible />
+  <Languages client:visible />
+</Layout>

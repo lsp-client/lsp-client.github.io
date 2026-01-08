@@ -1,20 +1,29 @@
 import { ArrowLeft } from "lucide-react";
 import ReactMarkdown, { type Components } from "react-markdown";
-import { getBlogPost } from "@/blog/posts";
 import { AppLink } from "@/components/app-link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-interface Props {
+export interface BlogPostData {
 	slug: string;
+	title: string;
+	description: string;
+	publishedAt: string | Date;
+	tags: string[];
+	readingMinutes: number;
+	content: string;
+}
+
+interface Props {
+	post: BlogPostData;
 	className?: string;
 }
 
-function formatDate(iso: string) {
+function formatDate(iso: string | Date) {
 	const date = new Date(iso);
-	if (Number.isNaN(date.getTime())) return iso;
+	if (Number.isNaN(date.getTime())) return String(iso);
 	return new Intl.DateTimeFormat(undefined, {
 		year: "numeric",
 		month: "short",
@@ -80,30 +89,7 @@ const markdownComponents: Components = {
 	},
 };
 
-export function BlogPost({ slug, className }: Props) {
-	const post = getBlogPost(slug);
-	if (!post) {
-		return (
-			<div className={cn("relative z-10", className)}>
-				<div className="container px-4 md:px-6 mx-auto">
-					<Card className="glass">
-						<CardHeader>
-							<CardTitle>Post not found</CardTitle>
-						</CardHeader>
-						<CardContent className="flex items-center gap-3">
-							<Button asChild variant="secondary">
-								<AppLink href="/blog">
-									<ArrowLeft className="mr-2 size-4" />
-									Back to Blog
-								</AppLink>
-							</Button>
-						</CardContent>
-					</Card>
-				</div>
-			</div>
-		);
-	}
-
+export function BlogPost({ post, className }: Props) {
 	return (
 		<div className={cn("relative z-10", className)}>
 			{/* Subtle blur backdrop - reduced opacity to let background show through */}

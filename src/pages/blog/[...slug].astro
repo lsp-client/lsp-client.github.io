@@ -1,0 +1,30 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { BlogPost } from '@/components/blog/blog-post';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const readingMinutes = post.data.readingMinutes || Math.ceil(post.body.split(/\s+/).length / 200);
+
+const formattedPost = {
+  slug: post.slug,
+  title: post.data.title,
+  description: post.data.description,
+  publishedAt: post.data.publishedAt,
+  tags: post.data.tags,
+  readingMinutes,
+  content: post.body
+};
+---
+
+<Layout title={post.data.title}>
+  <BlogPost post={formattedPost} />
+</Layout>
