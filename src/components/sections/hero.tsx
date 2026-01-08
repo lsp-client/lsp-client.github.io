@@ -13,7 +13,7 @@ const INSTALL_TARGETS: Array<{
 	{
 		id: "skill",
 		label: "Agent Skill",
-		command: "openskills add lsp-client/lsp-skill",
+		command: "openskills install lsp-client/lsp-skill",
 	},
 	{
 		id: "cli-tool",
