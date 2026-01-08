@@ -1,4 +1,4 @@
-import { Github } from "lucide-react";
+import { GithubIcon } from "@/components/ui/github-icon";
 
 export function Footer() {
 	return (
@@ -62,7 +62,7 @@ export function Footer() {
 									href="https://github.com/lsp-client"
 									className="text-muted-foreground hover:text-primary transition-colors flex items-center"
 								>
-									<Github className="h-4 w-4 mr-2" /> GitHub
+									<GithubIcon className="h-4 w-4 mr-2" /> GitHub
 								</a>
 							</li>
 						</ul>

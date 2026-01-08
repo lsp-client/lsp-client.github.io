@@ -126,7 +126,7 @@ export function Hero() {
 				{/* Description - From README */}
 				<p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 font-light">
 					Transforming the Language Server Protocol (LSP) into actionable
-					intelligence for AI Agents and developers.
+					intelligence for AI Coding Agents.
 				</p>
 
 				{/* Install Block - Opencode Style */}

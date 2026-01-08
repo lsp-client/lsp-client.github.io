@@ -1,4 +1,5 @@
 ---
+import { AgentWorkflow } from "@/components/sections/agent-workflow";
 import { Architecture } from "@/components/sections/architecture";
 import { Hero } from "@/components/sections/hero";
 import { Installation } from "@/components/sections/installation";
@@ -8,6 +9,7 @@ import Layout from "@/layouts/Layout.astro";
 
 <Layout>
   <Hero client:load />
+  <AgentWorkflow client:visible />
   <Installation client:visible />
   <Architecture client:visible />
   <Languages client:visible />
