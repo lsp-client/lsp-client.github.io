@@ -20,7 +20,8 @@
 		"noImplicitOverride": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			".velite": ["./.velite"]
 		},
 		// Some stricter flags (disabled by default)
 		"noUnusedLocals": true,

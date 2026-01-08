@@ -1,0 +1,119 @@
+---
+import { Github } from "lucide-react";
+import { AppLink } from "@/components/app-link";
+import { ModeToggle } from "@/components/mode-toggle";
+import { buttonVariants } from "@/components/ui/button";
+
+const { pathname } = Astro.url;
+const normalizedPathname = pathname.replace(/\/+$/, "") || "/";
+const isHome = normalizedPathname === "/";
+
+const navLinkClassName =
+  "text-muted-foreground hover:text-foreground transition-colors";
+---
+
+<header
+  id="main-header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent border-transparent py-2"
+>
+  <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+    <div class="flex items-center">
+      <AppLink
+        href="/"
+        className="font-display font-bold text-xl tracking-tighter"
+      >
+        lsp-client
+      </AppLink>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+      {
+        isHome ? (
+          <>
+            <a href="#installation" class={navLinkClassName}>
+              Installation
+            </a>
+            <a href="#architecture" class={navLinkClassName}>
+              Architecture
+            </a>
+            <a href="#languages" class={navLinkClassName}>
+              Languages
+            </a>
+            <AppLink href="/blog" className={navLinkClassName}>
+              Blog
+            </AppLink>
+            <a
+              href="https://github.com/lsp-client"
+              target="_blank"
+              rel="noopener noreferrer"
+              class={navLinkClassName}
+            >
+              GitHub
+            </a>
+          </>
+        ) : (
+          <>
+            <AppLink href="/" className={navLinkClassName}>
+              Home
+            </AppLink>
+            <AppLink href="/blog" className={navLinkClassName}>
+              Blog
+            </AppLink>
+            <a
+              href="https://github.com/lsp-client"
+              target="_blank"
+              rel="noopener noreferrer"
+              class={navLinkClassName}
+            >
+              GitHub
+            </a>
+          </>
+        )
+      }
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <ModeToggle client:load />
+      <a
+        href="https://github.com/lsp-client"
+        target="_blank"
+        rel="noopener noreferrer"
+        class={buttonVariants({
+          size: "sm",
+          className: "hidden sm:flex font-mono text-xs",
+        })}
+      >
+        <Github className="size-3" />
+        Star
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("main-header");
+  const handleScroll = () => {
+    if (!header) return;
+    if (window.scrollY > 20) {
+      header.classList.add(
+        "border-b",
+        "border-border/50",
+        "glass-strong",
+        "py-0"
+      );
+      header.classList.remove("bg-transparent", "border-transparent", "py-2");
+    } else {
+      header.classList.remove(
+        "border-b",
+        "border-border/50",
+        "glass-strong",
+        "py-0"
+      );
+      header.classList.add("bg-transparent", "border-transparent", "py-2");
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  // Initial check
+  handleScroll();
+</script>

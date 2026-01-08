@@ -1,6 +1,5 @@
 import { ArrowRight, Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import { BLOG_POSTS, getAllBlogTags } from "@/blog/posts";
 import { AppLink } from "@/components/app-link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,13 +13,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-interface Props {
-	className?: string;
+export interface Post {
+	slug: string;
+	title: string;
+	description: string;
+	publishedAt: string | Date;
+	tags: string[];
+	readingMinutes?: number;
 }
 
-function formatDate(iso: string) {
-	const date = new Date(iso);
-	if (Number.isNaN(date.getTime())) return iso;
+interface Props {
+	className?: string;
+	posts: Post[];
+}
+
+function formatDate(dateInput: string | Date) {
+	const date = new Date(dateInput);
+	if (Number.isNaN(date.getTime())) return String(dateInput);
 	return new Intl.DateTimeFormat(undefined, {
 		year: "numeric",
 		month: "short",
@@ -28,16 +37,29 @@ function formatDate(iso: string) {
 	}).format(date);
 }
 
-export function BlogIndex({ className }: Props) {
+export function BlogIndex({ className, posts: initialPosts }: Props) {
 	const [query, setQuery] = useState("");
 	const [tag, setTag] = useState<string | null>(null);
 
-	const tags = useMemo(() => getAllBlogTags(), []);
+	const allTags = useMemo(() => {
+		const tags = new Set<string>();
+		for (const post of initialPosts) {
+			for (const tag of post.tags) {
+				tags.add(tag);
+			}
+		}
+		return Array.from(tags).sort((a, b) => a.localeCompare(b));
+	}, [initialPosts]);
 
-	const posts = useMemo(() => {
+	const filteredPosts = useMemo(() => {
 		const q = query.trim().toLowerCase();
-		return BLOG_POSTS.slice()
-			.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+		return initialPosts
+			.slice()
+			.sort((a, b) => {
+				const dateA = new Date(a.publishedAt).getTime();
+				const dateB = new Date(b.publishedAt).getTime();
+				return dateB - dateA;
+			})
 			.filter((p) => {
 				if (tag && !p.tags.includes(tag)) return false;
 				if (!q) return true;
@@ -47,7 +69,7 @@ export function BlogIndex({ className }: Props) {
 					p.tags.some((t) => t.toLowerCase().includes(q))
 				);
 			});
-	}, [query, tag]);
+	}, [initialPosts, query, tag]);
 
 	return (
 		<div className={cn("relative z-10", className)}>
@@ -89,7 +111,7 @@ export function BlogIndex({ className }: Props) {
 					>
 						All
 					</Button>
-					{tags.map((t) => (
+					{allTags.map((t) => (
 						<Button
 							key={t}
 							type="button"
@@ -105,7 +127,7 @@ export function BlogIndex({ className }: Props) {
 
 				<div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 items-start">
 					<div className="space-y-6">
-						{posts.length === 0 ? (
+						{filteredPosts.length === 0 ? (
 							<Card className="glass">
 								<CardHeader>
 									<CardTitle>No results</CardTitle>
@@ -115,7 +137,7 @@ export function BlogIndex({ className }: Props) {
 								</CardHeader>
 							</Card>
 						) : (
-							posts.map((post) => (
+							filteredPosts.map((post) => (
 								<AppLink
 									key={post.slug}
 									href={`/blog/${post.slug}`}
@@ -173,7 +195,7 @@ export function BlogIndex({ className }: Props) {
 							</CardHeader>
 							<CardContent className="flex items-center gap-3">
 								<Badge className="rounded-full" variant="secondary">
-									{BLOG_POSTS.length} posts
+									{initialPosts.length} posts
 								</Badge>
 								{tag ? (
 									<Badge className="rounded-full" variant="outline">

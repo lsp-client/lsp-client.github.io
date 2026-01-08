@@ -43,7 +43,7 @@ export function Hero() {
 	};
 
 	return (
-		<section className="relative min-h-[90vh] flex flex-col items-center pt-24 md:pt-36 pb-20">
+		<section className="relative min-h-[80vh] flex flex-col items-center justify-center py-20">
 			<div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
 				{/* Badge - Simple version number */}
 				<AppLink
@@ -65,7 +65,7 @@ export function Hero() {
 						<button
 							type="button"
 							onClick={() => setIsExpanded(!isExpanded)}
-							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help transition-all"
+							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help"
 						>
 							IntelliSense
 						</button>
@@ -97,7 +97,7 @@ export function Hero() {
 						<button
 							type="button"
 							onClick={() => setIsExpandedAgentic(!isExpandedAgentic)}
-							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help transition-all"
+							className="bg-transparent p-0 underline decoration-dashed underline-offset-8 decoration-2 decoration-foreground/30 hover:decoration-primary cursor-help"
 						>
 							Coding Agent
 						</button>
