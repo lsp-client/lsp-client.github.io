@@ -18,7 +18,7 @@ const INSTALL_TARGETS: Array<{
 	{
 		id: "cli-tool",
 		label: "CLI tool",
-		command: "uv tool install lsp-cli",
+		command: "uv tool install --python 3.13 lsp-cli",
 	},
 	{
 		id: "lsp-sdk",

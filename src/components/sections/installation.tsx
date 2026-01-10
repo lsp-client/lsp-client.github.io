@@ -2,7 +2,13 @@ import { Check, Copy } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-type ToolId = "universal" | "opencode" | "claude-code" | "cursor" | "vscode";
+type ToolId =
+	| "prompt"
+	| "universal"
+	| "opencode"
+	| "claude-code"
+	| "gemini"
+	| "codex";
 
 interface ToolInstall {
 	id: ToolId;
@@ -14,69 +20,88 @@ interface ToolInstall {
 
 const TOOLS: ToolInstall[] = [
 	{
+		id: "prompt",
+		name: "AI Agent (Prompt)",
+		detail: "Copy the prompt and let your agent do the heavy lifting",
+		steps: [
+			"Copy the installation prompt below",
+			"Paste it into your AI agent's chat (Claude Code, Gemini, etc.)",
+			"The agent will automatically determine the path and install the skill",
+		],
+		command: `Please follow these steps to install this skill:
+
+1. Identify what AI agent tool you are (e.g., Claude Code, Gemini, Codex, OpenCode, etc.).
+2. Determine the correct installation directory for your tool:
+   - Claude Code: ~/.claude/skills/
+   - Gemini: ~/.gemini/skills/
+   - Codex: ~/.codex/skills/
+   - OpenCode: ~/.config/opencode/skill/
+3. Run the installation script:
+   bash <(curl -sSL https://raw.githubusercontent.com/lsp-client/lsp-skill/main/scripts/install.sh) <absolute_path_to_skill_directory>`,
+	},
+	{
 		id: "universal",
-		name: "Universal (Recommended)",
+		name: "OpenSkills",
 		detail: "Install using OpenSkills CLI",
 		steps: [
-			"Install OpenSkills CLI via npm",
-			"Open your project directory",
-			"Install the LSP skill using openskills",
+			"Install OpenSkills CLI if you haven't already",
+			"Run the install command in your terminal",
+			"The skill will be installed globally for all compatible agents",
 		],
-		command:
-			"npm install -g openskills && openskills install lsp-client/lsp-skill",
+		command: "openskills install lsp-client/lsp-skill --global",
 	},
 	{
 		id: "opencode",
 		name: "OpenCode",
-		detail: "Install as a local skill",
+		detail: "Install as an OpenCode skill",
 		steps: [
-			"Open your project directory",
-			"Download and extract the skill to .opencode/skill",
+			"Ensure OpenCode is installed and configured",
+			"Run the installation script with the OpenCode skill path",
 			"Restart OpenCode to load the new skill",
 		],
 		command:
-			"mkdir -p .opencode/skill/lsp-code-analysis && curl -L https://github.com/lsp-client/lsp-skill/releases/latest/download/lsp-code-analysis.zip -o lsp.zip && unzip lsp.zip -d .opencode/skill/lsp-code-analysis && rm lsp.zip",
+			"bash <(curl -sSL https://raw.githubusercontent.com/lsp-client/lsp-skill/main/scripts/install.sh) ~/.config/opencode/skill/lsp-code-analysis",
 	},
 	{
 		id: "claude-code",
 		name: "Claude Code",
-		detail: "Install as a native plugin",
+		detail: "Install as a Claude Code skill",
 		steps: [
-			"Run Claude Code in your project directory",
-			"Execute /plugin marketplace add lsp-client/lsp-skill",
-			"Execute /plugin install lsp-code-analysis@lsp-skill",
-		],
-		command: `/plugin marketplace add lsp-client/lsp-skill
-/plugin install lsp-code-analysis@lsp-skill`,
-	},
-	{
-		id: "cursor",
-		name: "Cursor",
-		detail: "Requires Nightly Build & Agent Skills Enabled",
-		steps: [
-			"Switch to Nightly build in Settings > General",
-			"Enable 'Agent Skills' in Settings > Beta",
-			"Extract the skill to .cursor/skills in your project",
+			"Ensure Claude Code is installed",
+			"Run the installation script with the Claude Code skill path",
+			"The skill will be available in your next Claude session",
 		],
 		command:
-			"mkdir -p .cursor/skills/lsp-code-analysis && curl -L https://github.com/lsp-client/lsp-skill/releases/latest/download/lsp-code-analysis.zip -o lsp.zip && unzip lsp.zip -d .cursor/skills/lsp-code-analysis && rm lsp.zip",
+			"bash <(curl -sSL https://raw.githubusercontent.com/lsp-client/lsp-skill/main/scripts/install.sh) ~/.claude/skills/lsp-code-analysis",
 	},
 	{
-		id: "vscode",
-		name: "VS Code",
-		detail: "Install for Cline or Roo Code extensions",
+		id: "gemini",
+		name: "Gemini",
+		detail: "Install for Gemini agent",
 		steps: [
-			"Open your project directory",
-			"Download and extract the skill to .skills/lsp-code-analysis",
-			"Configure your agent to use the new skill",
+			"Open your terminal",
+			"Run the installation script with the Gemini skill path",
+			"Gemini will now be able to use LSP for code analysis",
 		],
 		command:
-			"mkdir -p .skills/lsp-code-analysis && curl -L https://github.com/lsp-client/lsp-skill/releases/latest/download/lsp-code-analysis.zip -o lsp.zip && unzip lsp.zip -d .skills/lsp-code-analysis && rm lsp.zip",
+			"bash <(curl -sSL https://raw.githubusercontent.com/lsp-client/lsp-skill/main/scripts/install.sh) ~/.gemini/skills/lsp-code-analysis",
+	},
+	{
+		id: "codex",
+		name: "Codex",
+		detail: "Install for Codex agent",
+		steps: [
+			"Open your terminal",
+			"Run the installation script with the Codex skill path",
+			"Codex will gain advanced code understanding capabilities",
+		],
+		command:
+			"bash <(curl -sSL https://raw.githubusercontent.com/lsp-client/lsp-skill/main/scripts/install.sh) ~/.codex/skills/lsp-code-analysis",
 	},
 ];
 
 export function Installation() {
-	const [selected, setSelected] = useState<ToolId>("universal");
+	const [selected, setSelected] = useState<ToolId>("prompt");
 	const [copied, setCopied] = useState(false);
 
 	const tool = useMemo<ToolInstall>(
