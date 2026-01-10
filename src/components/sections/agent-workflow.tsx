@@ -1,4 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { Sparkles } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { CAPABILITIES } from "@/components/sections/capabilities-data";
+import { cn } from "@/lib/utils";
 
 // Claude Code colors & Theme
 const THEME = {
@@ -844,6 +847,140 @@ export function AgentWorkflow() {
 					</div>
 				</div>
 			</div>
+			<div className="container px-4 md:px-6 mx-auto mt-10">
+				<div className="max-w-4xl mx-auto">
+					<div className="rounded-lg border border-border bg-background/60 p-4 md:p-6">
+						<div className="mb-3 text-xs font-bold tracking-widest text-muted-foreground uppercase flex items-center gap-2">
+							<span className="w-8 h-px bg-border" />
+							Capabilities Snapshot
+							<span className="flex-1 h-px bg-border" />
+						</div>
+						<CapabilitiesList />
+					</div>
+				</div>
+			</div>
 		</section>
+	);
+}
+
+function CapabilitiesList() {
+	const categories = useMemo(() => Object.entries(CAPABILITIES), []);
+	const [expanded, setExpanded] = useState<Set<string>>(
+		new Set([categories[0]?.[0] ?? ""]),
+	);
+
+	const visible = categories;
+
+	const toggle = (cat: string) => {
+		setExpanded((prev) => {
+			const next = new Set(prev);
+			if (next.has(cat)) next.delete(cat);
+			else next.add(cat);
+			return next;
+		});
+	};
+
+	return (
+		<div className="space-y-3">
+			<div className="mb-3 flex items-center justify-end gap-4">
+				<button
+					type="button"
+					className="text-xs text-muted-foreground hover:text-foreground underline-offset-4 hover:underline transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 rounded-sm px-1 py-0.5"
+					onClick={() => setExpanded(new Set(categories.map(([cat]) => cat)))}
+				>
+					Expand All
+				</button>
+				<button
+					type="button"
+					className="text-xs text-muted-foreground hover:text-foreground underline-offset-4 hover:underline transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 rounded-sm px-1 py-0.5"
+					onClick={() => setExpanded(new Set())}
+				>
+					Collapse All
+				</button>
+			</div>
+			{visible.map(([category, items]) => {
+				const isOpen = expanded.has(category);
+				return (
+					<div key={category} className="border border-border/50 rounded-lg">
+						<button
+							type="button"
+							className={cn(
+								"w-full px-3 py-2 flex items-center justify-between",
+								"hover:bg-muted/40 transition-colors",
+							)}
+							onClick={() => toggle(category)}
+							aria-expanded={isOpen}
+						>
+							<div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+								{category}
+							</div>
+							<div className="flex items-center gap-3 text-[10px] text-muted-foreground">
+								<span>{items.length} items</span>
+								<span
+									className={cn(
+										"inline-block transition-transform duration-100",
+										isOpen ? "rotate-180" : "rotate-0",
+									)}
+									aria-hidden="true"
+								>
+									▾
+								</span>
+							</div>
+						</button>
+						<div
+							className={cn(
+								"grid grid-rows-[0fr] transition-[grid-template-rows] duration-100 ease-out",
+								isOpen && "grid-rows-[1fr]",
+							)}
+						>
+							<div className="overflow-hidden">
+								<div
+									className={cn(
+										"opacity-0 transition-opacity duration-100 ease-out",
+										isOpen && "opacity-100",
+									)}
+								>
+									<div className="px-3 pb-3">
+										<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+											{items.map((item) => (
+												<div
+													key={item.cmd}
+													className="flex items-start gap-3 rounded-md border border-border/50 bg-muted/40 px-3 py-2"
+												>
+													<div className="p-1.5 rounded-md bg-muted text-primary">
+														<item.icon className="w-4 h-4" />
+													</div>
+													<div className="min-w-0">
+														<div className="font-mono text-sm">{item.cmd}</div>
+														<div className="text-[11px] text-muted-foreground leading-snug">
+															{item.desc}
+														</div>
+													</div>
+												</div>
+											))}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				);
+			})}
+			<div className="mt-3 rounded-lg border border-border bg-muted/30 p-4">
+				<div className="flex items-center justify-center gap-3">
+					<div className="p-2 rounded-md text-primary">
+						<Sparkles className="w-4 h-4" />
+					</div>
+					<div className="text-center">
+						<div className="text-sm font-semibold text-foreground">
+							More Capabilities Coming Soon
+						</div>
+						<div className="text-xs text-muted-foreground">
+							Continuous expansion of repository-scale intelligence.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 }

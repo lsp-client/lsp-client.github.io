@@ -22,7 +22,7 @@ const TOOLS: ToolInstall[] = [
 	{
 		id: "prompt",
 		name: "AI Agent (Prompt)",
-		detail: "Copy the prompt and let your agent do the heavy lifting",
+		detail: "Prompt-based installation",
 		steps: [
 			"Copy the installation prompt below",
 			"Paste it into your AI agent's chat (Claude Code, Gemini, etc.)",
@@ -42,7 +42,7 @@ const TOOLS: ToolInstall[] = [
 	{
 		id: "universal",
 		name: "OpenSkills",
-		detail: "Install using OpenSkills CLI",
+		detail: "Install via OpenSkills CLI",
 		steps: [
 			"Install OpenSkills CLI if you haven't already",
 			"Run the install command in your terminal",
@@ -53,7 +53,7 @@ const TOOLS: ToolInstall[] = [
 	{
 		id: "opencode",
 		name: "OpenCode",
-		detail: "Install as an OpenCode skill",
+		detail: "Install for OpenCode",
 		steps: [
 			"Ensure OpenCode is installed and configured",
 			"Run the installation script with the OpenCode skill path",
@@ -65,7 +65,7 @@ const TOOLS: ToolInstall[] = [
 	{
 		id: "claude-code",
 		name: "Claude Code",
-		detail: "Install as a Claude Code skill",
+		detail: "Install for Claude Code",
 		steps: [
 			"Ensure Claude Code is installed",
 			"Run the installation script with the Claude Code skill path",
@@ -77,7 +77,7 @@ const TOOLS: ToolInstall[] = [
 	{
 		id: "gemini",
 		name: "Gemini",
-		detail: "Install for Gemini agent",
+		detail: "Install for Gemini",
 		steps: [
 			"Open your terminal",
 			"Run the installation script with the Gemini skill path",
@@ -89,7 +89,7 @@ const TOOLS: ToolInstall[] = [
 	{
 		id: "codex",
 		name: "Codex",
-		detail: "Install for Codex agent",
+		detail: "Install for Codex",
 		steps: [
 			"Open your terminal",
 			"Run the installation script with the Codex skill path",
@@ -151,9 +151,9 @@ export function Installation() {
 							<div className="text-sm font-mono text-muted-foreground mb-2">
 								{tool.name}
 							</div>
-							<div className="text-2xl font-display font-bold tracking-tight">
+							<h3 className="text-2xl font-display font-bold tracking-tight">
 								{tool.detail}
-							</div>
+							</h3>
 						</div>
 
 						<Button
@@ -178,7 +178,7 @@ export function Installation() {
 
 					<div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
 						<div>
-							<div className="text-sm font-semibold mb-3">Steps</div>
+							<h4 className="text-sm font-semibold mb-3">Steps</h4>
 							<ul className="space-y-2">
 								{tool.steps.map((s, idx) => (
 									<li
@@ -193,7 +193,7 @@ export function Installation() {
 						</div>
 
 						<div>
-							<div className="text-sm font-semibold mb-3">Command</div>
+							<h4 className="text-sm font-semibold mb-3">Command</h4>
 							<div className="rounded-2xl border border-border/70 bg-background/50 px-5 py-4">
 								<code className="font-mono text-sm text-foreground block select-all whitespace-pre-wrap">
 									{tool.command}
