@@ -4,5 +4,5 @@ import { cn } from "@/lib/utils";
 type Props = ComponentProps<"a">;
 
 export function AppLink({ className, ...props }: Props) {
-	return <a className={cn(className)} {...props} />;
+	return <a className={cn("cursor-pointer", className)} {...props} />;
 }

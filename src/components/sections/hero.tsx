@@ -85,7 +85,7 @@ export function Hero({ latestPostSlug }: { latestPostSlug?: string }) {
 												href="https://code.visualstudio.com/docs/editor/intellisense"
 												target="_blank"
 												rel="noopener noreferrer"
-												className="hover:underline underline-offset-4"
+												className="hover:underline underline-offset-4 cursor-pointer"
 											>
 												IntelliSense
 											</a>
@@ -95,7 +95,7 @@ export function Hero({ latestPostSlug }: { latestPostSlug?: string }) {
 											href="https://microsoft.github.io/language-server-protocol/"
 											target="_blank"
 											rel="noopener noreferrer"
-											className="text-foreground hover:underline underline-offset-4 font-medium"
+											className="text-foreground hover:underline underline-offset-4 font-medium cursor-pointer"
 										>
 											Language Server Protocol
 										</a>{" "}
@@ -195,7 +195,7 @@ export function Hero({ latestPostSlug }: { latestPostSlug?: string }) {
 										href="https://github.com/numman-ali/openskills"
 										target="_blank"
 										rel="noreferrer"
-										className="underline underline-offset-4 hover:text-foreground"
+										className="underline underline-offset-4 hover:text-foreground cursor-pointer"
 									>
 										https://github.com/numman-ali/openskills
 									</a>{" "}

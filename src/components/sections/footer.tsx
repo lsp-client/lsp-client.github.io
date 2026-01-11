@@ -23,7 +23,7 @@ export function Footer() {
 							<li>
 								<a
 									href="https://github.com/lsp-client/lsp-client"
-									className="text-muted-foreground hover:text-primary transition-colors"
+									className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
 								>
 									LSP Client
 								</a>
@@ -31,7 +31,7 @@ export function Footer() {
 							<li>
 								<a
 									href="https://github.com/lsp-client/LSAP"
-									className="text-muted-foreground hover:text-primary transition-colors"
+									className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
 								>
 									LSAP
 								</a>
@@ -39,7 +39,7 @@ export function Footer() {
 							<li>
 								<a
 									href="https://github.com/lsp-client/lsp-cli"
-									className="text-muted-foreground hover:text-primary transition-colors"
+									className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
 								>
 									LSP CLI
 								</a>
@@ -47,7 +47,7 @@ export function Footer() {
 							<li>
 								<a
 									href="https://github.com/lsp-client/lsp-skill"
-									className="text-muted-foreground hover:text-primary transition-colors"
+									className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
 								>
 									LSP Skill
 								</a>
@@ -61,7 +61,7 @@ export function Footer() {
 							<li>
 								<a
 									href="https://github.com/lsp-client"
-									className="text-muted-foreground hover:text-primary transition-colors flex items-center"
+									className="text-muted-foreground hover:text-primary transition-colors flex items-center cursor-pointer"
 								>
 									<GithubIcon className="h-4 w-4 mr-2" /> GitHub
 								</a>
