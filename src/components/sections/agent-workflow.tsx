@@ -905,7 +905,7 @@ function CapabilitiesList() {
 						<button
 							type="button"
 							className={cn(
-								"w-full px-3 py-2 flex items-center justify-between",
+								"w-full px-3 py-2 flex items-center justify-between cursor-pointer",
 								"hover:bg-muted/40 transition-colors",
 							)}
 							onClick={() => toggle(category)}
