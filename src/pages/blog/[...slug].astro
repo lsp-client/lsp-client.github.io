@@ -15,6 +15,8 @@ const { post } = Astro.props;
 const readingMinutes =
   post.data.readingMinutes || Math.ceil(post.body.split(/\s+/).length / 200);
 
+const { Content } = await post.render();
+
 const formattedPost = {
   slug: post.slug,
   title: post.data.title,
@@ -22,10 +24,11 @@ const formattedPost = {
   publishedAt: post.data.publishedAt,
   tags: post.data.tags,
   readingMinutes,
-  content: post.body,
 };
 ---
 
 <Layout title={post.data.title}>
-  <BlogPost post={formattedPost} />
+  <BlogPost post={formattedPost}>
+    <Content />
+  </BlogPost>
 </Layout>

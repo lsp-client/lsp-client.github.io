@@ -336,3 +336,59 @@
 .code-panel__dot--3 {
 	background: var(--code-dot-3);
 }
+
+.blog-markdown {
+	overflow-x: auto;
+}
+
+.blog-markdown h2 {
+	@apply text-2xl md:text-3xl font-display font-bold tracking-tight mt-10 mb-4 text-balance;
+}
+
+.blog-markdown p {
+	@apply text-foreground/90 text-lg leading-relaxed mb-6;
+}
+
+.blog-markdown blockquote {
+	@apply pl-6 border-l-2 border-primary my-8 italic text-lg text-foreground/80;
+}
+
+.blog-markdown ul {
+	@apply space-y-2 pl-5 list-disc text-foreground/90 text-lg leading-relaxed mb-6 marker:text-primary/50;
+}
+
+.blog-markdown ol {
+	@apply space-y-2 pl-5 list-decimal text-foreground/90 text-lg leading-relaxed mb-6 marker:text-primary/50;
+}
+
+.blog-markdown code {
+	@apply bg-secondary px-1.5 py-0.5 rounded-md font-mono text-sm;
+}
+
+.blog-markdown pre code {
+	@apply bg-transparent p-0;
+}
+
+.blog-markdown pre {
+	@apply my-8 rounded-xl border border-border p-5 overflow-x-auto text-sm md:text-[13px] leading-relaxed font-mono;
+	background: var(--code-bg);
+	color: var(--code-text);
+}
+
+.blog-markdown table {
+	@apply my-8 w-full text-sm;
+	border-collapse: collapse;
+}
+
+.blog-markdown th,
+.blog-markdown td {
+	@apply border border-border px-3 py-2 align-top;
+}
+
+.blog-markdown thead th {
+	@apply bg-secondary/60 font-semibold;
+}
+
+.blog-markdown tbody tr:nth-child(even) td {
+	@apply bg-muted/30;
+}
