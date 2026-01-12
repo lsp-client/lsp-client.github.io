@@ -224,7 +224,7 @@ export function Hero({ latestPostSlug }: { latestPostSlug?: string }) {
 						asChild
 					>
 						<a
-							href="https://github.com/lsp-client/lsp-client"
+							href="https://github.com/lsp-client/lsp-skill"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
