@@ -52,6 +52,13 @@ The system automatically resolves this to the precise character offset. This dec
 
 This section contains the complete technical rules and decision records for the Locate module.
 
+## Design Goals
+
+1. **Semantic-First**: Allow Agents to describe positions in a natural way.
+2. **Precise & Controllable**: Reach character-level precision when needed.
+3. **Comprehensive Coverage**: Support positioning requirements for all LSP `textDocument` capabilities.
+4. **Robust & Fault-Tolerant**: Positioning remains valid after minor code changes.
+
 ## Core Concept Rules
 
 ### Stage 1: Scope Types
@@ -69,6 +76,13 @@ This section contains the complete technical rules and decision records for the 
 - **With marker**: Locates at the marker position.
 - **Without marker**: Locates at the start of the matched text.
 - **`find` is `None`**: Uses the "natural position" of the Scope.
+
+### Natural Position
+
+When `find` is not specified (or is `None`), the system falls back to the "Natural Position" of the Scope, which represents the most semantically significant point for that scope:
+
+- **SymbolScope**: The position of the symbol's **declared name** (e.g., the `func` identifier in `def func():`). This is critical for LSP operations like `references` and `rename`.
+- **LineScope**: The **first non-whitespace character** of the line.
 
 ## String Syntax
 
@@ -104,16 +118,58 @@ This section contains the complete technical rules and decision records for the 
 | `foo.bar`   | Allows flexible spacing around dot       | `foo.bar`, `foo . bar`    | `foobar`  |
 | `foo(x, y)` | Allows flexible spacing; preserves comma | `foo(x, y)`, `foo( x,y )` | `foo(xy)` |
 
+### Empty Find Pattern
+
+An empty `find` pattern (or whitespace-only) with a marker returns:
+- Offset 0 if both before and after segments are empty.
+- Otherwise, it is treated as a mandatory whitespace pattern (requiring at least one whitespace character).
+
+### Design Rationale
+
+- **Why Not Exact String Matching?** Formatting varies (spaces vs tabs). Exact matching is too brittle.
+- **Why Not Full Fuzzy Matching?** Overly permissive matching (e.g., `int a` matching `inta`) creates ambiguity.
+- **Why Token-Based?** Preserves identifier integrity while allowing natural operator spacing, matching the developer's mental model.
+
 ## LSP Capability Mapping
 
 | LSP Capability               | Positioning Need    | Locate Usage                     |
-| :--------------------------- | :------------------ | :------------------------------- | ------------- |
-| `textDocument/definition`    | Identifier position | `find="<                         | >identifier"` |
+| :--------------------------- | :------------------ | :------------------------------- |
+| `textDocument/definition`    | Identifier position | `find="<\|>identifier"`          |
 | `textDocument/references`    | Symbol declaration  | `SymbolScope(symbol_path=[...])` |
-| `textDocument/hover`         | Any identifier      | `find="<                         | >target"`     |
-| `textDocument/completion`    | Trigger point       | `find="obj.<                     | >"`           |
-| `textDocument/signatureHelp` | Inside parentheses  | `find="func(<                    | >"`           |
+| `textDocument/hover`         | Any identifier      | `find="<\|>target"`              |
+| `textDocument/completion`    | Trigger point       | `find="obj.<\|>"`                |
+| `textDocument/signatureHelp` | Inside parentheses  | `find="func(<\|>"`               |
 | `textDocument/codeAction`    | Selected range      | `LocateRange(scope=...)`         |
+
+## Usage Examples
+
+### 1. Find All References of a Symbol
+
+```python
+# Using SymbolScope (Recommended for declaration)
+Locate(file_path="models.py", scope=SymbolScope(symbol_path=["MyClass"]))
+
+# Using find pattern
+Locate(file_path="models.py", find="class <|>MyClass")
+```
+
+### 2. Get Hover Information
+
+```python
+# Locate 'result' within 'process' function
+Locate(
+    file_path="utils.py",
+    scope=SymbolScope(symbol_path=["process"]),
+    find="return <|>result"
+)
+```
+
+### 3. Trigger Code Completion
+
+```python
+# Position after 'self.'
+"service.py@self.<|>"
+```
 
 ## Design Decision Record (DDR)
 
